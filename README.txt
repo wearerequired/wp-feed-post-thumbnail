@@ -1,9 +1,9 @@
-=== @TODO: Plugin Name ===
-Contributors: (this should be a list of wordpress.org userids)
+=== r+ WP Feed Post Thumbnail ===
+Contributors: hubeRsen, neverything
 Donate link: http://required.ch/
-Tags: comments, spam
+Tags: feed, rss, post-thumbnail, media, mrss
 Requires at least: 3.5.1
-Tested up to: 3.6
+Tested up to: 3.8.1
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

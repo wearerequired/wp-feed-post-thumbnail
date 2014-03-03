@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name.
+ * WP Feed Post Thumbnail
  *
  * @package   WP_Feed_Post_Thumbnail_Admin
  * @author    Silvan Hagen <silvan@required.ch>
@@ -15,8 +15,6 @@
  *
  * If you're interested in introducing public-facing
  * functionality, then refer to `class-required-wp-feed-post-thumbnail.php`
- *
- * @TODO: Rename this class to a proper name for your plugin.
  *
  * @package WP_Feed_Post_Thumbnail_Admin
  * @author  Silvan Hagen <silvan@required.ch>
@@ -50,21 +48,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 	private function __construct() {
 
 		/*
-		 * @TODO :
-		 *
-		 * - Uncomment following lines if the admin class should only be available for super admins
-		 */
-		/* if( ! is_super_admin() ) {
-			return;
-		} */
-
-		/*
 		 * Call $plugin_slug from public plugin class.
-		 *
-		 * @TODO:
-		 *
-		 * - Rename "WP_Feed_Post_Thumbnail" to the name of your initial plugin class
-		 *
 		 */
 		$plugin = WP_Feed_Post_Thumbnail::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
@@ -79,7 +63,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 		 * Read more about actions and filters:
 		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
 		 */
-		add_action( '@TODO', array( $this, 'action_method_name' ) );
+		add_action( 'admin_init', array( $this, 'add_settings' ) );
 		add_filter( '@TODO', array( $this, 'filter_method_name' ) );
 
 	}
@@ -92,15 +76,6 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 * @return    object    A single instance of this class.
 	 */
 	public static function get_instance() {
-
-		/*
-		 * @TODO :
-		 *
-		 * - Uncomment following lines if the admin class should only be available for super admins
-		 */
-		/* if( ! is_super_admin() ) {
-			return;
-		} */
 
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
@@ -119,7 +94,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 
 		return array_merge(
 			array(
-				'settings' => '<a href="' . admin_url( 'options-reading.php' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
+				'settings' => '<a href="' . admin_url( 'options-reading.php#' . $this->plugin_slug . '_auhtor' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
 			),
 			$links
 		);
@@ -127,12 +102,8 @@ class WP_Feed_Post_Thumbnail_Admin {
 	}
 
 	/**
-	 * NOTE:     Actions are points in the execution of a page or process
-	 *           lifecycle that WordPress fires.
-	 *
-	 *           Actions:    http://codex.wordpress.org/Plugin_API#Actions
-	 *           Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
-	 *
+	 * Add new setting under Settings -> Reading
+     *
 	 * @since    1.0.0
 	 */
 	public function add_settings() {
@@ -154,11 +125,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 	}
 
 	/**
-	 * NOTE:     Filters are points of execution in which WordPress modifies data
-	 *           before saving it or sending it to the browser.
-	 *
-	 *           Filters: http://codex.wordpress.org/Plugin_API#Filters
-	 *           Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
+	 * Render new setting fields
 	 *
 	 * @since    1.0.0
 	 */
@@ -177,15 +144,30 @@ class WP_Feed_Post_Thumbnail_Admin {
 
 
 	?>
-		<label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
+		<p></p><label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
 			<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[author]' ); ?>" value="1" <?php checked( 1, $author ); ?>>
-			<?php _e( 'Show post-thumbnail author in feed media element', 'required-wp-feed-post-thumbnail' ); ?>
-		</label>
-		<label for="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>">
+			<?php _e( 'Show <strong>Author</strong> in the feed media element', 'required-wp-feed-post-thumbnail' ); ?>
+		</label></p>
+		<p></p><label for="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>">
 			<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[description]' ); ?>" value="1" <?php checked( 1, $description ); ?>>
-			<?php _e( 'Show post-thumbnail description in feed media element', 'required-wp-feed-post-thumbnail' ); ?>
-		</label>
+			<?php _e( 'Show <strong>Description</strong> in the feed media element', 'required-wp-feed-post-thumbnail' ); ?>
+		</label></p>
+        <p class="description"><?php _e( 'Set attributes of the <code>media</code> element in the feed.', 'required-wp-feed-post-thumbnail' ); ?></p>
 	<?php
 	}
+
+    /**
+     * Simple validation of the settings.
+     *
+     * @since 1.0.0
+     *
+     * @param $settings
+     * @return mixed
+     */
+    public function validate_settings( $settings ) {
+
+        return $settings;
+
+    }
 
 }

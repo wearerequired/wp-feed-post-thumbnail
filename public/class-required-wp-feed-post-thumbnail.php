@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name.
+ * WP Feed Post Thumbnail
  *
  * @package   WP_Feed_Post_Thumbnail
  * @author    Silvan Hagen <silvan@required.ch>
@@ -50,6 +50,11 @@ class WP_Feed_Post_Thumbnail {
 	 */
 	protected static $instance = null;
 
+    public static $default_options = array(
+        'author' => 1,
+        'description' => 1,
+    );
+
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
 	 * and styles.
@@ -64,9 +69,6 @@ class WP_Feed_Post_Thumbnail {
 		// Activate plugin when new blog is added
 		add_action( 'wpmu_new_blog', array( $this, 'activate_new_site' ) );
 
-		/* Define custom functionality.
-		 * Refer To http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-		 */
 		add_action( 'rss2_ns', array( $this, 'add_feed_namespace' ) );
 		add_filter( 'rss2_item', array( $this, 'add_feed_item_media' ) );
 
@@ -223,7 +225,15 @@ class WP_Feed_Post_Thumbnail {
 	 * @since    1.0.0
 	 */
 	private static function single_activate() {
-		// @TODO: Add default options
+
+        $options = get_option( 'required-wp-feed-post-thumbnail_options' );
+
+        if ( ! $options ) {
+
+            update_option( 'required-wp-feed-post-thumbnail_options', self::$default_options );
+
+        }
+
 	}
 
 	/**
@@ -250,32 +260,27 @@ class WP_Feed_Post_Thumbnail {
 
 	}
 
-	/**
-	 * NOTE:  Actions are points in the execution of a page or process
-	 *        lifecycle that WordPress fires.
-	 *
-	 *        Actions:    http://codex.wordpress.org/Plugin_API#Actions
-	 *        Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
-	 *
-	 * @since    1.0.0
-	 */
-	public function add_feed_namespace() {
+    /**
+     * Add MRSS namespace to feed
+     *
+     * @since    1.0.0
+     */
+    public function add_feed_namespace() {
 
 		echo 'xmlns:media="http://search.yahoo.com/mrss/"';
 
 	}
 
-	/**
-	 * NOTE:  Filters are points of execution in which WordPress modifies data
-	 *        before saving it or sending it to the browser.
-	 *
-	 *        Filters: http://codex.wordpress.org/Plugin_API#Filters
-	 *        Reference:  http://codex.wordpress.org/Plugin_API/Filter_Reference
-	 *
-	 * @since    1.0.0
-	 */
-	public function add_feed_item_media() {
-		global $post;
+    /**
+     * Add Media Element to Feed Item
+     *
+     * @since    1.0.0
+     */
+    public function add_feed_item_media() {
+
+        global $post;
+
+        $options = get_option( $this->plugin_slug . '_options' );
 
     	$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
     	$thumbnail = apply_filters( 'required_wp_feed_post_thumbnail_filter', $thumbnail );
@@ -285,10 +290,14 @@ class WP_Feed_Post_Thumbnail {
         	$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_thumbnail', 'thumbnail' ) );
         ?>
         	<media:content url="<?php echo $img_attr[0]; ?>" type="<?php echo $thumbnail->post_mime_type; ?>" medium="image" width="<?php echo $img_attr[1]; ?>" height="<?php echo $img_attr[2]; ?>">
-            	<media:title type="plain"><![CDATA[<?php echo $thumbnail->post_title; ?>]]></media:title>
+            	<media:title type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_title', $thumbnail->post_title ); ?>]]></media:title>
             	<media:thumbnail url="<?php echo $img_attr_thumb[0]; ?>" width="<?php echo $img_attr_thumb[1]; ?>" height="<?php echo $img_attr_thumb[2]; ?>" />
-            	<media:description type="plain"><![CDATA[<?php echo $thumbnail->post_content; ?>]]></media:description>
-            	<media:copyright><?php echo get_the_author(); ?></media:copyright>
+            <?php if ( $options && array_key_exists( 'description', $options ) ) : ?>
+            	<media:description type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_description', $thumbnail->post_content ); ?>]]></media:description>
+            <?php endif; ?>
+            <?php if ( $options && array_key_exists( 'author', $options ) ) : ?>
+            	<media:copyright><?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_author', get_the_author( $thumbnail->ID ) ); ?></media:copyright>
+            <?php endif; ?>
         	</media:content>
     	<?php
     	}
