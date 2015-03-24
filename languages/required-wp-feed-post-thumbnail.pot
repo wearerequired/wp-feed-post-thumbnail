@@ -1,4 +1,4 @@
-# Copyright (C) 2014 required gmbh
+# Copyright (C) 2015 required gmbh
 # This file is distributed under the same license as the WP_Feed_Post_Thumbnail package.
 msgid ""
 msgstr ""

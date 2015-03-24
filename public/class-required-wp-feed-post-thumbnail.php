@@ -6,7 +6,7 @@
  * @author    Silvan Hagen <silvan@required.ch>
  * @license   GPL-2.0+
  * @link      http://required.ch
- * @copyright 2014 required gmbh
+ * @copyright 2015 required gmbh
  */
 
 /**
@@ -50,10 +50,10 @@ class WP_Feed_Post_Thumbnail {
 	 */
 	protected static $instance = null;
 
-    public static $default_options = array(
-        'author' => 1,
-        'description' => 1,
-    );
+	public static $default_options = array(
+		'author'      => 1,
+		'description' => 1,
+	);
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -107,7 +107,7 @@ class WP_Feed_Post_Thumbnail {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses
+	 * @param    boolean $network_wide       True if WPMU superadmin uses
 	 *                                       "Network Activate" action, false if
 	 *                                       WPMU is disabled or plugin is
 	 *                                       activated on an individual blog.
@@ -116,7 +116,7 @@ class WP_Feed_Post_Thumbnail {
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 
-			if ( $network_wide  ) {
+			if ( $network_wide ) {
 
 				// Get all blog ids
 				$blog_ids = self::get_blog_ids();
@@ -144,7 +144,7 @@ class WP_Feed_Post_Thumbnail {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param    boolean    $network_wide    True if WPMU superadmin uses
+	 * @param    boolean $network_wide       True if WPMU superadmin uses
 	 *                                       "Network Deactivate" action, false if
 	 *                                       WPMU is disabled or plugin is
 	 *                                       deactivated on an individual blog.
@@ -182,7 +182,7 @@ class WP_Feed_Post_Thumbnail {
 	 *
 	 * @since    1.0.0
 	 *
-	 * @param    int    $blog_id    ID of the new blog.
+	 * @param    int $blog_id ID of the new blog.
 	 */
 	public function activate_new_site( $blog_id ) {
 
@@ -226,13 +226,13 @@ class WP_Feed_Post_Thumbnail {
 	 */
 	private static function single_activate() {
 
-        $options = get_option( 'required-wp-feed-post-thumbnail_options' );
+		$options = get_option( 'required-wp-feed-post-thumbnail_options' );
 
-        if ( ! $options ) {
+		if ( ! $options ) {
 
-            update_option( 'required-wp-feed-post-thumbnail_options', self::$default_options );
+			update_option( 'required-wp-feed-post-thumbnail_options', self::$default_options );
 
-        }
+		}
 
 	}
 
@@ -256,51 +256,51 @@ class WP_Feed_Post_Thumbnail {
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
+		load_plugin_textdomain( $domain, false, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
 
 	}
 
-    /**
-     * Add MRSS namespace to feed
-     *
-     * @since    1.0.0
-     */
-    public function add_feed_namespace() {
+	/**
+	 * Add MRSS namespace to feed
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_feed_namespace() {
 
 		echo 'xmlns:media="http://search.yahoo.com/mrss/"';
 
 	}
 
-    /**
-     * Add Media Element to Feed Item
-     *
-     * @since    1.0.0
-     */
-    public function add_feed_item_media() {
+	/**
+	 * Add Media Element to Feed Item
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_feed_item_media() {
 
-        global $post;
+		global $post;
 
-        $options = get_option( $this->plugin_slug . '_options' );
+		$options = get_option( $this->plugin_slug . '_options' );
 
-    	$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
-    	$thumbnail = apply_filters( 'required_wp_feed_post_thumbnail_filter', $thumbnail );
+		$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
+		$thumbnail = apply_filters( 'required_wp_feed_post_thumbnail_filter', $thumbnail );
 
-    	if ( $thumbnail ) {
-        	$img_attr 		= wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_full', 'full' ) );
-        	$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_thumbnail', 'thumbnail' ) );
-        ?>
-        	<media:content url="<?php echo $img_attr[0]; ?>" type="<?php echo $thumbnail->post_mime_type; ?>" medium="image" width="<?php echo $img_attr[1]; ?>" height="<?php echo $img_attr[2]; ?>">
-            	<media:title type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_title', $thumbnail->post_title ); ?>]]></media:title>
-            	<media:thumbnail url="<?php echo $img_attr_thumb[0]; ?>" width="<?php echo $img_attr_thumb[1]; ?>" height="<?php echo $img_attr_thumb[2]; ?>" />
-            <?php if ( $options && array_key_exists( 'description', $options ) ) : ?>
-            	<media:description type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_description', $thumbnail->post_content ); ?>]]></media:description>
-            <?php endif; ?>
-            <?php if ( $options && array_key_exists( 'author', $options ) ) : ?>
-            	<media:copyright><?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_author', get_the_author( $thumbnail->ID ) ); ?></media:copyright>
-            <?php endif; ?>
-        	</media:content>
-    	<?php
-    	}
+		if ( $thumbnail ) {
+			$img_attr       = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_full', 'full' ) );
+			$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_thumbnail', 'thumbnail' ) );
+			?>
+			<media:content url="<?php echo $img_attr[0]; ?>" type="<?php echo $thumbnail->post_mime_type; ?>" medium="image" width="<?php echo $img_attr[1]; ?>" height="<?php echo $img_attr[2]; ?>">
+				<media:title type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_title', $thumbnail->post_title ); ?>]]></media:title>
+				<media:thumbnail url="<?php echo $img_attr_thumb[0]; ?>" width="<?php echo $img_attr_thumb[1]; ?>" height="<?php echo $img_attr_thumb[2]; ?>" />
+				<?php if ( $options && array_key_exists( 'description', $options ) ) : ?>
+					<media:description type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_description', $thumbnail->post_content ); ?>]]></media:description>
+				<?php endif; ?>
+				<?php if ( $options && array_key_exists( 'author', $options ) ) : ?>
+					<media:copyright><?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_author', get_the_author( $thumbnail->ID ) ); ?></media:copyright>
+				<?php endif; ?>
+			</media:content>
+		<?php
+		}
 	}
 
 }

@@ -4,7 +4,7 @@
  * @author    Silvan Hagen <email@example.com>
  * @license   GPL-2.0+
  * @link      http://required.ch
- * @copyright 2014 required gmbh
+ * @copyright 2015 required gmbh
  *
  * @wordpress-plugin
  * Plugin Name:       WP Feed Post Thumbnail

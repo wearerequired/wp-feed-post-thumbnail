@@ -6,7 +6,7 @@
  * @author    Silvan Hagen <silvan@required.ch>
  * @license   GPL-2.0+
  * @link      http://required.ch
- * @copyright 2014 required gmbh
+ * @copyright 2015 required gmbh
  */
 
 /**
@@ -50,7 +50,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 		/*
 		 * Call $plugin_slug from public plugin class.
 		 */
-		$plugin = WP_Feed_Post_Thumbnail::get_instance();
+		$plugin            = WP_Feed_Post_Thumbnail::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 
 		// Add an action link pointing to the options page.
@@ -103,23 +103,23 @@ class WP_Feed_Post_Thumbnail_Admin {
 
 	/**
 	 * Add new setting under Settings -> Reading
-     *
+	 *
 	 * @since    1.0.0
 	 */
 	public function add_settings() {
-		
+
 		register_setting(
-			'reading',                 			 // settings page
+			'reading',                             // settings page
 			$this->plugin_slug . '_options',     // option name
 			array( $this, 'validate_settings' )  // validation callback
 		);
 
 		add_settings_field(
-			$this->plugin_slug,      													// id
-			__( 'Feed Post Thumbnail Settings', 'required-wp-feed-post-thumbnail' ) ,   // setting title
-			array( $this, 'render_settings'),    										// display callback
-			'reading',                 													// settings page
-			'default'                  													// settings section
+			$this->plugin_slug,                                                        // id
+			__( 'Feed Post Thumbnail Settings', 'required-wp-feed-post-thumbnail' ),   // setting title
+			array( $this, 'render_settings' ),                                            // display callback
+			'reading',                                                                    // settings page
+			'default'                                                                    // settings section
 		);
 
 	}
@@ -130,20 +130,22 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 * @since    1.0.0
 	 */
 	public function render_settings() {
-		
+
 		$options = get_option( $this->plugin_slug . '_options' );
-		
+
 		$description = '';
-		$author = '';
+		$author      = '';
 
-		if ( array_key_exists( 'description' , $options ) ) 
+		if ( array_key_exists( 'description', $options ) ) {
 			$description = $options['description'];
+		}
 
-		if ( array_key_exists( 'author' , $options ) )
+		if ( array_key_exists( 'author', $options ) ) {
 			$author = $options['author'];
+		}
 
 
-	?>
+		?>
 		<p></p><label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
 			<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[author]' ); ?>" value="1" <?php checked( 1, $author ); ?>>
 			<?php _e( 'Show <strong>Author</strong> in the feed media element', 'required-wp-feed-post-thumbnail' ); ?>
@@ -156,18 +158,19 @@ class WP_Feed_Post_Thumbnail_Admin {
 	<?php
 	}
 
-    /**
-     * Simple validation of the settings.
-     *
-     * @since 1.0.0
-     *
-     * @param $settings
-     * @return mixed
-     */
-    public function validate_settings( $settings ) {
+	/**
+	 * Simple validation of the settings.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param $settings
+	 *
+	 * @return mixed
+	 */
+	public function validate_settings( $settings ) {
 
-        return $settings;
+		return $settings;
 
-    }
+	}
 
 }
