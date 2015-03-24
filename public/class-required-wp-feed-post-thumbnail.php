@@ -10,25 +10,18 @@
  */
 
 /**
- * Plugin class. This class should ideally be used to work with the
- * public-facing side of the WordPress site.
- *
- * If you're interested in introducing administrative or dashboard
- * functionality, then refer to `class-required-wp-feed-post-thumbnail-admin.php`
+ * Main class used to alter the feed output
  *
  * @package WP_Feed_Post_Thumbnail
  * @author  Silvan Hagen <silvan@required.ch>
  */
 class WP_Feed_Post_Thumbnail {
-
 	/**
-	 * The variable name is used as the text domain when internationalizing strings
-	 * of text. Its value should match the Text Domain file header in the main
-	 * plugin file.
+	 * The plugin's textdomain.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var      string
+	 * @var string
 	 */
 	protected $plugin_slug = 'required-wp-feed-post-thumbnail';
 
@@ -37,7 +30,7 @@ class WP_Feed_Post_Thumbnail {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var      object
+	 * @var WP_Feed_Post_Thumbnail
 	 */
 	protected static $instance = null;
 
@@ -45,27 +38,14 @@ class WP_Feed_Post_Thumbnail {
 	 * Initialize the plugin by setting localization and loading public scripts
 	 * and styles.
 	 *
-	 * @since     1.0.0
+	 * @since 1.0.0
 	 */
 	private function __construct() {
-
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		add_action( 'rss2_ns', array( $this, 'add_feed_namespace' ) );
 		add_filter( 'rss2_item', array( $this, 'add_feed_item_media' ) );
-
-	}
-
-	/**
-	 * Return the plugin slug.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return Plugin slug variable.
-	 */
-	public function get_plugin_slug() {
-		return $this->plugin_slug;
 	}
 
 	/**
@@ -76,7 +56,6 @@ class WP_Feed_Post_Thumbnail {
 	 * @return WP_Feed_Post_Thumbnail A single instance of this class.
 	 */
 	public static function get_instance() {
-
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
 			self::$instance = new self;
@@ -86,29 +65,25 @@ class WP_Feed_Post_Thumbnail {
 	}
 
 	/**
-	 * Load the plugin text domain for translation.
+	 * Load the plugin textdomain for translation.
 	 *
 	 * @since 1.0.0
 	 */
 	public function load_plugin_textdomain() {
-
 		$domain = $this->plugin_slug;
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, false, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
-
 	}
 
 	/**
-	 * Add MRSS namespace to feed
+	 * Add MRSS namespace to feed.
 	 *
 	 * @since 1.0.0
 	 */
 	public function add_feed_namespace() {
-
 		echo 'xmlns:media="http://search.yahoo.com/mrss/"';
-
 	}
 
 	/**
@@ -117,6 +92,7 @@ class WP_Feed_Post_Thumbnail {
 	 * @since 1.0.0
 	 */
 	public function add_feed_item_media() {
+		global $post;
 
 		$options = get_option( $this->plugin_slug . '_options', array(
 			'author'      => 1,
@@ -126,22 +102,23 @@ class WP_Feed_Post_Thumbnail {
 		$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
 		$thumbnail = apply_filters( 'required_wp_feed_post_thumbnail_filter', $thumbnail );
 
-		if ( $thumbnail ) {
-			$img_attr       = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_full', 'full' ) );
-			$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_thumbnail', 'thumbnail' ) );
-			?>
-			<media:content url="<?php echo $img_attr[0]; ?>" type="<?php echo $thumbnail->post_mime_type; ?>" medium="image" width="<?php echo $img_attr[1]; ?>" height="<?php echo $img_attr[2]; ?>">
-				<media:title type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_title', $thumbnail->post_title ); ?>]]></media:title>
-				<media:thumbnail url="<?php echo $img_attr_thumb[0]; ?>" width="<?php echo $img_attr_thumb[1]; ?>" height="<?php echo $img_attr_thumb[2]; ?>" />
-				<?php if ( $options && array_key_exists( 'description', $options ) ) : ?>
-					<media:description type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_description', $thumbnail->post_content ); ?>]]></media:description>
-				<?php endif; ?>
-				<?php if ( $options && array_key_exists( 'author', $options ) ) : ?>
-					<media:copyright><?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_author', get_the_author( $thumbnail->ID ) ); ?></media:copyright>
-				<?php endif; ?>
-			</media:content>
-		<?php
+		if ( ! $thumbnail ) {
+			return;
 		}
-	}
 
+		$img_attr       = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_full', 'full' ) );
+		$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'required_wp_feed_post_thumbnail_filter_size_thumbnail', 'thumbnail' ) );
+		?>
+		<media:content url="<?php echo $img_attr[0]; ?>" type="<?php echo $thumbnail->post_mime_type; ?>" medium="image" width="<?php echo $img_attr[1]; ?>" height="<?php echo $img_attr[2]; ?>">
+			<media:title type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_title', $thumbnail->post_title ); ?>]]></media:title>
+			<media:thumbnail url="<?php echo $img_attr_thumb[0]; ?>" width="<?php echo $img_attr_thumb[1]; ?>" height="<?php echo $img_attr_thumb[2]; ?>" />
+			<?php if ( $options && array_key_exists( 'description', $options ) ) : ?>
+				<media:description type="plain"><![CDATA[<?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_description', $thumbnail->post_content ); ?>]]></media:description>
+			<?php endif; ?>
+			<?php if ( $options && array_key_exists( 'author', $options ) ) : ?>
+				<media:copyright><?php echo apply_filters( 'required_wp_feed_post_thumbnail_filter_author', get_the_author( $thumbnail->ID ) ); ?></media:copyright>
+			<?php endif; ?>
+		</media:content>
+	<?php
+	}
 }

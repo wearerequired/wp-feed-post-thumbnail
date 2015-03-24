@@ -26,7 +26,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @var      object
+	 * @var WP_Feed_Post_Thumbnail_Admin
 	 */
 	protected static $instance = null;
 
@@ -34,10 +34,9 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 * Initialize the plugin by loading admin scripts & styles and adding a
 	 * settings page and menu.
 	 *
-	 * @since     1.0.0
+	 * @since 1.0.0
 	 */
 	private function __construct() {
-
 		/*
 		 * Call $plugin_slug from public plugin class.
 		 */
@@ -49,7 +48,6 @@ class WP_Feed_Post_Thumbnail_Admin {
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 
 		add_action( 'admin_init', array( $this, 'add_settings' ) );
-
 	}
 
 	/**
@@ -57,30 +55,27 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $links Plugin action links
+	 * @param array $links Plugin action links.
 	 *
 	 * @return array
 	 */
 	public function add_action_links( $links ) {
-
 		return array_merge(
 			array(
 				'settings' => '<a href="' . admin_url( 'options-reading.php#' . $this->plugin_slug . '_author' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
 			),
 			$links
 		);
-
 	}
 
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0.0
+	 * @since 1.0.0
 	 *
-	 * @return    object    A single instance of this class.
+	 * @return WP_Feed_Post_Thumbnail_Admin A single instance of this class.
 	 */
 	public static function get_instance() {
-
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
 			self::$instance = new self;
@@ -90,12 +85,11 @@ class WP_Feed_Post_Thumbnail_Admin {
 	}
 
 	/**
-	 * Add new setting under Settings -> Reading
+	 * Add new setting under Settings -> Reading.
 	 *
 	 * @since 1.0.0
 	 */
 	public function add_settings() {
-
 		register_setting(
 			'reading',                           // settings page
 			$this->plugin_slug . '_options',     // option name
@@ -108,16 +102,14 @@ class WP_Feed_Post_Thumbnail_Admin {
 			array( $this, 'render_settings' ),
 			'reading'
 		);
-
 	}
 
 	/**
-	 * Render new setting fields
+	 * Render new setting fields.
 	 *
 	 * @since 1.0.0
 	 */
 	public function render_settings() {
-
 		$options = (array) get_option( $this->plugin_slug . '_options', array(
 			'author'      => 1,
 			'description' => 1,
@@ -158,11 +150,8 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 * @return array
 	 */
 	public function validate_settings( $settings ) {
-
 		array_map( 'intval', $settings );
 
 		return $settings;
-
 	}
-
 }
