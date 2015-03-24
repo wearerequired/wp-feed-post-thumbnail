@@ -65,7 +65,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 
 		return array_merge(
 			array(
-				'settings' => '<a href="' . admin_url( 'options-reading.php#' . $this->plugin_slug . '_auhtor' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
+				'settings' => '<a href="' . admin_url( 'options-reading.php#' . $this->plugin_slug . '_author' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
 			),
 			$links
 		);
