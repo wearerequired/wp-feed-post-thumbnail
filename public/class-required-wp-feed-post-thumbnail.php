@@ -22,20 +22,11 @@
 class WP_Feed_Post_Thumbnail {
 
 	/**
-	 * Plugin version, used for cache-busting of style and script file references.
-	 *
-	 * @since   1.0.0
-	 *
-	 * @var     string
-	 */
-	const VERSION = '1.0.0';
-
-	/**
 	 * The variable name is used as the text domain when internationalizing strings
 	 * of text. Its value should match the Text Domain file header in the main
 	 * plugin file.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 *
 	 * @var      string
 	 */
@@ -44,7 +35,7 @@ class WP_Feed_Post_Thumbnail {
 	/**
 	 * Instance of this class.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 *
 	 * @var      object
 	 */
@@ -69,9 +60,9 @@ class WP_Feed_Post_Thumbnail {
 	/**
 	 * Return the plugin slug.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 *
-	 * @return    Plugin slug variable.
+	 * @return Plugin slug variable.
 	 */
 	public function get_plugin_slug() {
 		return $this->plugin_slug;
@@ -80,9 +71,9 @@ class WP_Feed_Post_Thumbnail {
 	/**
 	 * Return an instance of this class.
 	 *
-	 * @since     1.0.0
+	 * @since 1.0.0
 	 *
-	 * @return    object    A single instance of this class.
+	 * @return WP_Feed_Post_Thumbnail A single instance of this class.
 	 */
 	public static function get_instance() {
 
@@ -97,7 +88,7 @@ class WP_Feed_Post_Thumbnail {
 	/**
 	 * Load the plugin text domain for translation.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function load_plugin_textdomain() {
 
@@ -112,7 +103,7 @@ class WP_Feed_Post_Thumbnail {
 	/**
 	 * Add MRSS namespace to feed
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function add_feed_namespace() {
 
@@ -123,7 +114,7 @@ class WP_Feed_Post_Thumbnail {
 	/**
 	 * Add Media Element to Feed Item
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function add_feed_item_media() {
 

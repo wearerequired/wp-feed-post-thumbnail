@@ -24,20 +24,11 @@ class WP_Feed_Post_Thumbnail_Admin {
 	/**
 	 * Instance of this class.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 *
 	 * @var      object
 	 */
 	protected static $instance = null;
-
-	/**
-	 * Slug of the plugin screen.
-	 *
-	 * @since    1.0.0
-	 *
-	 * @var      string
-	 */
-	protected $plugin_screen_hook_suffix = null;
 
 	/**
 	 * Initialize the plugin by loading admin scripts & styles and adding a
@@ -57,14 +48,27 @@ class WP_Feed_Post_Thumbnail_Admin {
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 
-		/*
-		 * Define custom functionality.
-		 *
-		 * Read more about actions and filters:
-		 * http://codex.wordpress.org/Plugin_API#Hooks.2C_Actions_and_Filters
-		 */
 		add_action( 'admin_init', array( $this, 'add_settings' ) );
-		add_filter( '@TODO', array( $this, 'filter_method_name' ) );
+
+	}
+
+	/**
+	 * Add settings action link to the plugins page.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $links Plugin action links
+	 *
+	 * @return array
+	 */
+	public function add_action_links( $links ) {
+
+		return array_merge(
+			array(
+				'settings' => '<a href="' . admin_url( 'options-reading.php#' . $this->plugin_slug . '_auhtor' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
+			),
+			$links
+		);
 
 	}
 
@@ -86,40 +90,23 @@ class WP_Feed_Post_Thumbnail_Admin {
 	}
 
 	/**
-	 * Add settings action link to the plugins page.
-	 *
-	 * @since    1.0.0
-	 */
-	public function add_action_links( $links ) {
-
-		return array_merge(
-			array(
-				'settings' => '<a href="' . admin_url( 'options-reading.php#' . $this->plugin_slug . '_auhtor' ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
-			),
-			$links
-		);
-
-	}
-
-	/**
 	 * Add new setting under Settings -> Reading
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function add_settings() {
 
 		register_setting(
-			'reading',                             // settings page
+			'reading',                           // settings page
 			$this->plugin_slug . '_options',     // option name
 			array( $this, 'validate_settings' )  // validation callback
 		);
 
 		add_settings_field(
-			$this->plugin_slug,                                                        // id
-			__( 'Feed Post Thumbnail Settings', 'required-wp-feed-post-thumbnail' ),   // setting title
-			array( $this, 'render_settings' ),                                            // display callback
-			'reading',                                                                    // settings page
-			'default'                                                                    // settings section
+			$this->plugin_slug,
+			__( 'Feed Post Thumbnail Settings', 'required-wp-feed-post-thumbnail' ),
+			array( $this, 'render_settings' ),
+			'reading'
 		);
 
 	}
@@ -127,7 +114,7 @@ class WP_Feed_Post_Thumbnail_Admin {
 	/**
 	 * Render new setting fields
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	public function render_settings() {
 
@@ -166,9 +153,9 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param $settings
+	 * @param array $settings The changed plugin settings.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function validate_settings( $settings ) {
 
