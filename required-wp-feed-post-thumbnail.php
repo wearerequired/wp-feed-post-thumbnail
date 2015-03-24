@@ -31,13 +31,6 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once( plugin_dir_path( __FILE__ ) . 'public/class-required-wp-feed-post-thumbnail.php' );
 
-/*
- * Register hooks that are fired when the plugin is activated or deactivated.
- * When the plugin is deleted, the uninstall.php file is loaded.
- */
-register_activation_hook( __FILE__, array( 'WP_Feed_Post_Thumbnail', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'WP_Feed_Post_Thumbnail', 'deactivate' ) );
-
 add_action( 'plugins_loaded', array( 'WP_Feed_Post_Thumbnail', 'get_instance' ) );
 
 /*----------------------------------------------------------------------------*

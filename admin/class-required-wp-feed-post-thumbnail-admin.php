@@ -131,7 +131,10 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 */
 	public function render_settings() {
 
-		$options = get_option( $this->plugin_slug . '_options' );
+		$options = (array) get_option( $this->plugin_slug . '_options', array(
+			'author'      => 1,
+			'description' => 1,
+		) );
 
 		$description = '';
 		$author      = '';
@@ -168,6 +171,8 @@ class WP_Feed_Post_Thumbnail_Admin {
 	 * @return mixed
 	 */
 	public function validate_settings( $settings ) {
+
+		array_map( 'intval', $settings );
 
 		return $settings;
 
