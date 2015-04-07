@@ -49,6 +49,17 @@ class WP_Feed_Post_Thumbnail {
 	}
 
 	/**
+	 * Getter for the plugin slug
+	 *
+	 * @return string
+	 *
+	 * @since 1.1.1
+	 */
+	public function get_plugin_slug() {
+		return $this->plugin_slug;
+	}
+
+	/**
 	 * Return an instance of this class.
 	 *
 	 * @since 1.0.0
