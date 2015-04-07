@@ -128,11 +128,11 @@ class WP_Feed_Post_Thumbnail_Admin {
 
 
 		?>
-		<p></p><label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
+		<p><label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
 			<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[author]' ); ?>" value="1" <?php checked( 1, $author ); ?>>
 			<?php _e( 'Show <strong>Author</strong> in the feed media element', 'required-wp-feed-post-thumbnail' ); ?>
 		</label></p>
-		<p></p><label for="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>">
+		<p><label for="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>">
 			<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[description]' ); ?>" value="1" <?php checked( 1, $description ); ?>>
 			<?php _e( 'Show <strong>Description</strong> in the feed media element', 'required-wp-feed-post-thumbnail' ); ?>
 		</label></p>
