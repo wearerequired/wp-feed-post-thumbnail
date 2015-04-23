@@ -14,4 +14,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-delete_option( 'required-wp-feed-post-thumbnail_options' );
+delete_option( 'wp-feed-post-thumbnail_options' );
