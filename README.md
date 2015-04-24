@@ -30,11 +30,19 @@ None so far. But you can ask as any time on [twitter](https://twitter.com/wearer
 
 ### Question ###
 
-Answer
+#### Does the RSS feed still validate with this plugin enabled? ###
+
+Yep, we add the proper XML namespaces for that. Everything just works as expected!
 
 ## Screenshots ##
 
-1. Description of first screenshot
+No screenshots yet.
+
+## Contribute ##
+
+If you would like to contribute to this plugin, report an isse or anything like that, please note that we develop this plugin on [GitHub](https://github.com/wearerequired/required-wp-feed-post-thumbnail).
+
+Developed by [required+](http://required.ch/ "Team of experienced web professionals from Switzerland & Germany")
 
 ## Changelog ##
 
