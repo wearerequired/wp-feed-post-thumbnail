@@ -75,8 +75,8 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 		}
 
 		$options = get_option( $this->plugin_slug . '_options', array(
-			'author'      => 1,
-			'description' => 1,
+			'author'      => true,
+			'description' => true,
 		) );
 
 		$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
@@ -94,12 +94,12 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 				<![CDATA[<?php echo apply_filters( 'wp_feed_post_thumbnail_title', $thumbnail->post_title ); ?>]]>
 			</media:title>
 			<media:thumbnail url="<?php echo $img_attr_thumb[0]; ?>" width="<?php echo $img_attr_thumb[1]; ?>" height="<?php echo $img_attr_thumb[2]; ?>" />
-			<?php if ( isset( $options['description'] ) ) : ?>
+			<?php if ( isset( $options['description'] ) && $options['description'] ) : ?>
 				<media:description type="plain">
 					<![CDATA[<?php echo apply_filters( 'wp_feed_post_thumbnail_description', $thumbnail->post_content ); ?>]]>
 				</media:description>
 			<?php endif; ?>
-			<?php if ( isset( $options['author'] ) ) : ?>
+			<?php if ( isset( $options['author'] ) && $options['author'] ) : ?>
 				<media:copyright>
 					<?php echo apply_filters( 'wp_feed_post_thumbnail_author', get_the_author() ); ?>
 				</media:copyright>
