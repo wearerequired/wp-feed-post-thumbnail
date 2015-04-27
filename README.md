@@ -1,5 +1,5 @@
 # WP Feed Post Thumbnail #
-Contributors:      wearerequired  
+Contributors:      wearerequired, neverything, swissspidy  
 Donate link:       http://required.ch  
 Tags:              rss feed, rss, feed, thumbnail, mrss, media rss  
 Requires at least: 3.5.1  
