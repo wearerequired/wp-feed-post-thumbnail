@@ -1,5 +1,4 @@
 <?php
-defined( 'WPINC' ) or die;
 
 class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 
@@ -82,18 +81,18 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 		$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
 		$thumbnail = apply_filters( 'wp_feed_post_thumbnail_image', $thumbnail );
 
-		if ( ! is_a( $thumbnail, 'WP_Post' ) ) {
+		if ( ! $thumbnail instanceof WP_Post ) {
 			return;
 		}
 
 		$img_attr       = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_full', 'full' ) );
 		$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_thumbnail', 'thumbnail' ) );
 		?>
-		<media:content url="<?php echo $img_attr[0]; ?>" type="<?php echo $thumbnail->post_mime_type; ?>" medium="image" width="<?php echo $img_attr[1]; ?>" height="<?php echo $img_attr[2]; ?>">
+		<media:content url="<?php echo esc_url( $img_attr[0] ); ?>" type="<?php echo esc_attr( $thumbnail->post_mime_type ); ?>" medium="image" width="<?php echo absint( $img_attr[1] ); ?>" height="<?php echo absint( $img_attr[2] ); ?>">
 			<media:title type="plain">
 				<![CDATA[<?php echo apply_filters( 'wp_feed_post_thumbnail_title', $thumbnail->post_title ); ?>]]>
 			</media:title>
-			<media:thumbnail url="<?php echo $img_attr_thumb[0]; ?>" width="<?php echo $img_attr_thumb[1]; ?>" height="<?php echo $img_attr_thumb[2]; ?>" />
+			<media:thumbnail url="<?php echo esc_url( $img_attr_thumb[0] ); ?>" width="<?php echo absint( $img_attr_thumb[1] ); ?>" height="<?php echo absint( $img_attr_thumb[2] ); ?>" />
 			<?php if ( isset( $options['description'] ) && $options['description'] ) : ?>
 				<media:description type="plain">
 					<![CDATA[<?php echo apply_filters( 'wp_feed_post_thumbnail_description', $thumbnail->post_content ); ?>]]>

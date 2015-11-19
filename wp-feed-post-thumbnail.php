@@ -29,8 +29,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-defined( 'WPINC' ) or die;
-
 include( dirname( __FILE__ ) . '/lib/requirements-check.php' );
 
 $wp_feed_post_thumbnail_requirements_check = new WP_Feed_Post_Thumbnail_Requirements_Check( array(
