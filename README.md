@@ -3,7 +3,7 @@ Contributors:      wearerequired, neverything, swissspidy
 Donate link:       http://required.ch  
 Tags:              rss feed, rss, feed, thumbnail, mrss, media rss  
 Requires at least: 3.5.1  
-Tested up to:      4.2  
+Tested up to:      4.4  
 Stable tag:        2.0.0  
 License:           GPLv2 or later  
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html  
