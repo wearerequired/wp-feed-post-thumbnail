@@ -10,7 +10,7 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '2.0.0';
+	const VERSION = '2.0.1';
 
 	/**
 	 * Plugin slug.
