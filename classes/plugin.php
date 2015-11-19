@@ -111,17 +111,17 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 		?>
 		<media:content url="<?php echo esc_url( $img_attr[0] ); ?>" type="<?php echo esc_attr( $thumbnail->post_mime_type ); ?>" medium="image" width="<?php echo absint( $img_attr[1] ); ?>" height="<?php echo absint( $img_attr[2] ); ?>">
 			<media:title type="plain">
-				<![CDATA[<?php echo apply_filters( 'wp_feed_post_thumbnail_title', $thumbnail->post_title ); ?>]]>
+				<![CDATA[<?php echo sanitize_text_field( apply_filters( 'wp_feed_post_thumbnail_title', $thumbnail->post_title ) ); ?>]]>
 			</media:title>
 			<media:thumbnail url="<?php echo esc_url( $img_attr_thumb[0] ); ?>" width="<?php echo absint( $img_attr_thumb[1] ); ?>" height="<?php echo absint( $img_attr_thumb[2] ); ?>" />
 			<?php if ( isset( $options['description'] ) && $options['description'] ) : ?>
 				<media:description type="plain">
-					<![CDATA[<?php echo apply_filters( 'wp_feed_post_thumbnail_description', $thumbnail->post_content ); ?>]]>
+					<![CDATA[<?php echo wp_kses_post( apply_filters( 'wp_feed_post_thumbnail_description', $thumbnail->post_content ) ); ?>]]>
 				</media:description>
 			<?php endif; ?>
 			<?php if ( isset( $options['author'] ) && $options['author'] ) : ?>
 				<media:copyright>
-					<?php echo apply_filters( 'wp_feed_post_thumbnail_author', get_the_author() ); ?>
+					<?php echo esc_html( apply_filters( 'wp_feed_post_thumbnail_author', get_the_author() ) ); ?>
 				</media:copyright>
 			<?php endif; ?>
 		</media:content>
