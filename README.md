@@ -46,12 +46,17 @@ Developed by [required+](http://required.ch/ "Team of experienced web profession
 
 ## Changelog ##
 
+### 2.0.1 - 2015-11-19 ###
+* Enhancement: Better escaping of feed data.
+* Enhancement: Improved translatable strings.
+* Fixed: Corrected settings link in the plugin list table.
+
 ### 2.0.0 ###
 * Enhancement: Major rewrite using the `grunt-wp-plugin` template. Breaks backwards compatibility due to renamed options.
 * Fixed: Prevent notices in the RSS feed output.
 
 ### 1.1.1 ###
-* Added missing method WP_Feed_Post_Thumbnail->get_plugin_slug();
+* Added missing method `WP_Feed_Post_Thumbnail->get_plugin_slug()`;
 
 ### 1.1.0 ###
 * Code cleanup
@@ -60,6 +65,9 @@ Developed by [required+](http://required.ch/ "Team of experienced web profession
 * Initial Release
 
 ## Upgrade Notice ##
+
+### 2.0.1 ###
+Some minor improvements and bug fixes. 100% compatible with WordPress 4.4.
 
 ### 2.0.0 ###
 Major rewrite to make the plugin more future-proof. Grab it while it’s hot!
