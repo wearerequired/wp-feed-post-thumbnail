@@ -171,15 +171,27 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 		}
 
 		?>
-		<p><label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
+		<p>
+			<label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
 				<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[author]' ); ?>" value="1" <?php checked( 1, $author ); ?>>
-				<?php _e( 'Show <strong>Author</strong> in the feed media element', 'wp-feed-post-thumbnail' ); ?>
-			</label></p>
-		<p><label for="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>">
+				<?php _e( 'Show author information in the feed media element', 'wp-feed-post-thumbnail' ); ?>
+			</label>
+		</p>
+		<p>
+			<label for="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>">
 				<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[description]' ); ?>" value="1" <?php checked( 1, $description ); ?>>
-				<?php _e( 'Show <strong>Description</strong> in the feed media element', 'wp-feed-post-thumbnail' ); ?>
-			</label></p>
-		<p class="description"><?php _e( 'Set attributes of the <code>media</code> element in the feed.', 'wp-feed-post-thumbnail' ); ?></p>
+				<?php _e( 'Show description in the feed media element', 'wp-feed-post-thumbnail' ); ?>
+			</label>
+		</p>
+		<p class="description">
+			<?php
+			printf(
+				/* translators: %s: 'media' */
+				__( 'Set attributes of the %s element in the feed.', 'wp-feed-post-thumbnail' ),
+				'<code>media</code>'
+			);
+			?>
+		</p>
 		<?php
 	}
 
