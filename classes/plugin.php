@@ -39,7 +39,7 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 		$this->hook( 'rss2_item', 'add_feed_item_media' );
 
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( $this->get_path() . 'wp-widget-disable.php' );
+		$plugin_basename = plugin_basename( $this->get_path() . 'wp-feed-post-thumbnail.php' );
 		$this->hook( 'plugin_action_links_' . $plugin_basename, 'plugin_action_links' );
 
 		$this->hook( 'admin_init', 'add_settings' );
@@ -50,6 +50,27 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 	 */
 	public function init() {
 		$this->load_textdomain( 'wp-feed-post-thumbnail', '/languages' );
+	}
+
+	/**
+	 * Add settings action link to the plugins page.
+	 *
+	 * @since 2.0.1
+	 *
+	 * @param array $links Plugin action links.
+	 * @return array Modified plugin action links.
+	 */
+	public function plugin_action_links( array $links ) {
+		return array_merge(
+			array(
+				'settings' => sprintf(
+					'<a href="%s">%s</a>',
+					admin_url( 'options-reading.php' ),
+					__( 'Settings', 'wp-feed-post-thumbnail' )
+				),
+			),
+			$links
+		);
 	}
 
 	/**
