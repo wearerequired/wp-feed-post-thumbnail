@@ -24,28 +24,33 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: classes/plugin.php:125
+#: classes/plugin.php:69
+msgid "Settings"
+msgstr ""
+
+#: classes/plugin.php:145
 msgid "Feed Post Thumbnail Settings"
 msgstr ""
 
-#: classes/plugin.php:156
-msgid "Show <strong>Author</strong> in the feed media element"
+#: classes/plugin.php:177
+msgid "Show author information in the feed media element"
 msgstr ""
 
-#: classes/plugin.php:160
-msgid "Show <strong>Description</strong> in the feed media element"
+#: classes/plugin.php:183
+msgid "Show description in the feed media element"
 msgstr ""
 
-#: classes/plugin.php:162
-msgid "Set attributes of the <code>media</code> element in the feed."
+#: classes/plugin.php:190
+#. translators: %s: 'media'
+msgid "Set attributes of the %s element in the feed."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "WP Feed Post Thumbnail"
 msgstr ""
 
-#. Author URI of the plugin/theme
-msgid "http://required.ch"
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/wearerequired/required-wp-feed-post-thumbnail/"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -56,4 +61,8 @@ msgstr ""
 
 #. Author of the plugin/theme
 msgid "required+"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://required.ch"
 msgstr ""
