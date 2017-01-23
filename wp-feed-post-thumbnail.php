@@ -37,9 +37,10 @@ $wp_feed_post_thumbnail_requirements_check = new WP_Feed_Post_Thumbnail_Requirem
 
 if ( $wp_feed_post_thumbnail_requirements_check->passes() ) {
 	// Pull in the plugin classes and initialize
-	include( dirname( __FILE__ ) . '/lib/wp-stack-plugin.php' );
 	include( dirname( __FILE__ ) . '/classes/plugin.php' );
-	WP_Feed_Post_Thumbnail_Plugin::start( __FILE__ );
+
+	$wp_feed_post_thumbnail_plugin = new WP_Feed_Post_Thumbnail_Plugin();
+	add_action( 'plugins_loaded', array( $wp_feed_post_thumbnail_plugin, 'add_hooks' ) );
 }
 
 unset( $wp_feed_post_thumbnail_requirements_check );
