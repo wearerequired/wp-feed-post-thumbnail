@@ -46,10 +46,10 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 	}
 
 	/**
-	 * Initializes the plugin, registers textdomain, etc.
+	 * Loads textdomain.
 	 */
 	public function init() {
-		$this->load_textdomain( 'wp-feed-post-thumbnail', '/languages' );
+		load_plugin_textdomain( 'wp-feed-post-thumbnail' );
 	}
 
 	/**
