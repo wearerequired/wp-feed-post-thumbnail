@@ -142,7 +142,7 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 
 		add_settings_field(
 			$this->plugin_slug,
-			__( 'Feed Post Thumbnail Settings', 'wp-feed-post-thumbnail' ),
+			__( 'Feed Post Thumbnail', 'wp-feed-post-thumbnail' ),
 			array( $this, 'render_settings' ),
 			'reading'
 		);
