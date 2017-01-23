@@ -1,18 +1,15 @@
 <?php
 /**
  * Plugin Name: WP Feed Post Thumbnail
- * Plugin URI:  https://github.com/wearerequired/required-wp-feed-post-thumbnail/
+ * Plugin URI:  https://required.com/services/wordpress-plugins/wp-feed-post-thumbnail/
  * Description: Adds MRSS namespace to the feed and uses post-thumbnail as media element in the feed. Settings available under Settings -> Reading.
  * Version:     2.0.1
- * Author:      required+
- * Author URI:  http://required.ch
+ * Author:      required
+ * Author URI:  https://required.com
  * License:     GPLv2+
  * Text Domain: wp-feed-post-thumbnail
- * Domain Path: /languages
- */
-
-/**
- * Copyright (c) 2015 required+ (email : support@required.ch)
+ *
+ * Copyright (c) 2015-2017 required+ (email: support@required.ch)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at

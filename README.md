@@ -1,12 +1,12 @@
 # WP Feed Post Thumbnail #
-Contributors:      wearerequired, neverything, swissspidy  
-Donate link:       http://required.ch  
-Tags:              rss feed, rss, feed, thumbnail, mrss, media rss  
-Requires at least: 3.5.1  
-Tested up to:      4.4  
-Stable tag:        2.0.1  
-License:           GPLv2 or later  
-License URI:       http://www.gnu.org/licenses/gpl-2.0.html  
+* Contributors: wearerequired, neverything, swissspidy
+* Donate link: https://required.com
+* Tags: rss feed, rss, feed, thumbnail, mrss, media rss
+* Requires at least: 3.5.1
+* Tested up to: 4.7
+* Stable tag: 2.0.1
+* License: GPLv2 or later
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Adds MRSS namespace to the feed and uses post-thumbnail as media element in the feed. Settings available under Settings -> Reading.
 
@@ -42,7 +42,7 @@ No screenshots yet.
 
 If you would like to contribute to this plugin, report an isse or anything like that, please note that we develop this plugin on [GitHub](https://github.com/wearerequired/required-wp-feed-post-thumbnail).
 
-Developed by [required+](http://required.ch/ "Team of experienced web professionals from Switzerland & Germany")
+Developed by [required](https://required.com/ "Team of experienced web professionals from Switzerland & Germany")
 
 ## Changelog ##
 
