@@ -3,7 +3,7 @@
 * Tags: rss feed, rss, feed, thumbnail, mrss, media rss
 * Requires at least: 3.5.1
 * Tested up to: 4.7
-* Stable tag: 2.0.1
+* Stable tag: 2.1.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,7 +45,11 @@ Developed by [required](https://required.com/ "Team of experienced web professio
 
 ## Changelog ##
 
-### 2.0.1 - 2015-11-19 ###
+### 2.1.0 ###
+* Enhancement: Translations moved to https://translate.wordpress.org/projects/wp-plugins/wp-feed-post-thumbnail.
+* Enhancement: Simplified code base by removing `WP_Stack_Plugin2` dependency.
+
+### 2.0.1 ###
 * Enhancement: Better escaping of feed data.
 * Enhancement: Improved translatable strings.
 * Fixed: Corrected settings link in the plugin list table.

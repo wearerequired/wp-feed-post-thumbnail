@@ -1,7 +1,7 @@
 {
   "name": "wearerequired/wp-feed-post-thumbnail",
   "description": "Adds MRSS namespace to the feed and uses post-thumbnail as media element in the feed. Settings available under Settings -> Reading.",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "type": "wordpress-plugin",
   "license": "GPL-2.0+",
   "authors": [
