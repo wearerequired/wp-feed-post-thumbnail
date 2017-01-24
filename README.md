@@ -25,13 +25,23 @@ WP Feed Post Thumbnail is very lightweight and only adds two small options under
 
 ## Frequently Asked Questions ##
 
-None so far. But you can ask as any time on [twitter](https://twitter.com/wearerequired)!
-
-### Question ###
-
-#### Does the RSS feed still validate with this plugin enabled? ###
+### Does the RSS feed still validate with this plugin enabled? ##
 
 Yep, we add the proper XML namespaces for that. Everything just works as expected!
+
+### Any way to force the plugin to always add a certain thumbnail size? ###
+
+Yes. The plugin has two filters available for this:
+
+	// Filters the size on media:content tag. Defaults to 'full'.
+	add_filter( 'wp_feed_post_thumbnail_image_size_full', function( $size ) {
+		return 'large'; // Return any registered image size.
+	}, 10, 1 );
+	
+	// Filters the size on the media:thumbnail tag. Defaults to 'thumbnail'.
+	add_filter( 'wp_feed_post_thumbnail_image_size_thumbnail', function( $size ) {
+		return 'medium'; // Return any registered image size.
+	}, 10, 1 );
 
 ## Screenshots ##
 
