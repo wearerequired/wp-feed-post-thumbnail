@@ -1,6 +1,6 @@
 <?php
 
-class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
+class WP_Feed_Post_Thumbnail_Plugin {
 
 	/**
 	 * @var self
@@ -22,33 +22,26 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 	protected $plugin_slug = 'wp-feed-post-thumbnail';
 
 	/**
-	 * Constructs the object, hooks in to `plugins_loaded`.
-	 */
-	protected function __construct() {
-		$this->hook( 'plugins_loaded', 'add_hooks' );
-	}
-
-	/**
 	 * Adds hooks.
 	 */
 	public function add_hooks() {
-		$this->hook( 'init' );
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 
 		// Modify RSS feed
-		$this->hook( 'rss2_ns', 'add_feed_namespace' );
-		$this->hook( 'rss2_item', 'add_feed_item_media' );
+		add_action( 'rss2_ns', array( $this, 'add_feed_namespace' ) );
+		add_action( 'rss2_item', array( $this, 'add_feed_item_media' ) );
 
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( $this->get_path() . 'wp-feed-post-thumbnail.php' );
-		$this->hook( 'plugin_action_links_' . $plugin_basename, 'plugin_action_links' );
+		add_action( 'plugin_action_links_' . $plugin_basename, array( $this, 'plugin_action_links' ) );
 
-		$this->hook( 'admin_init', 'add_settings' );
+		add_action( 'admin_init', array( $this, 'add_settings' ) );
 	}
 
 	/**
 	 * Loads textdomain.
 	 */
-	public function init() {
+	public function load_textdomain() {
 		load_plugin_textdomain( 'wp-feed-post-thumbnail' );
 	}
 
@@ -210,4 +203,12 @@ class WP_Feed_Post_Thumbnail_Plugin extends WP_Stack_Plugin2 {
 		return $settings;
 	}
 
+	/**
+	 * Returns the path to the plugin directory.
+	 *
+	 * @return string The absolute path to the plugin directory.
+	 */
+	protected function get_path() {
+		return plugin_dir_path( __DIR__ );
+	}
 }
