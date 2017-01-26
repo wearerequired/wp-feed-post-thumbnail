@@ -45,7 +45,7 @@ Yes. The plugin has two filters available for this:
 
 ## Screenshots ##
 
-No screenshots yet.
+1. Reading Settings
 
 ## Contribute ##
 
