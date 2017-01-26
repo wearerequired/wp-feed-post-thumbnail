@@ -3,11 +3,6 @@
 class WP_Feed_Post_Thumbnail_Plugin {
 
 	/**
-	 * @var self
-	 */
-	protected static $instance;
-
-	/**
 	 * Plugin version.
 	 */
 	const VERSION = '2.1.0';
