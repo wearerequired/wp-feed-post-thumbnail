@@ -7,7 +7,7 @@ module.exports = {
 			'!assets/**',
 			'!.git/**',
 			'!Gruntfile.*',
-      '!grunt/**',
+			'!grunt/**',
 			'!package.json',
 			'!.gitignore',
 			'!.gitmodules',

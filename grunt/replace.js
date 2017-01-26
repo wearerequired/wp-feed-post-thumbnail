@@ -28,21 +28,9 @@ module.exports = {
 		]
 	},
 	svn_readme: {
-		src         : ['release/svn/readme.md'],
-		dest        : 'release/svn/readme.txt',
+		src         : ['release/svn/README.md'],
+		dest        : 'release/svn/README.md',
 		replacements: [
-			{
-				from: /^# (.*?)( #+)?$/mg,
-				to  : '=== $1 ==='
-			},
-			{
-				from: /^## (.*?)( #+)?$/mg,
-				to  : '== $1 =='
-			},
-			{
-				from: /^### (.*?)( #+)?$/mg,
-				to  : '= $1 ='
-			},
 			{
 				from: /^Stable tag:(\s*?)[\w.-]+(\s*?)$/mi,
 				to  : 'Stable tag:$1<%= package.version %>$2'
