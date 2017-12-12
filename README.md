@@ -1,8 +1,8 @@
 # WP Feed Post Thumbnail #
 * Contributors: wearerequired, neverything, swissspidy
 * Tags: rss feed, rss, feed, thumbnail, mrss, media rss
-* Requires at least: 3.5.1
-* Tested up to: 4.8
+* Requires at least: 4.0
+* Tested up to: 4.9
 * Requires PHP: 5.3
 * Stable tag: 2.1.0
 * License: GPLv2 or later
