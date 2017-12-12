@@ -26,18 +26,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-include( dirname( __FILE__ ) . '/lib/requirements-check.php' );
-
-$wp_feed_post_thumbnail_requirements_check = new WP_Feed_Post_Thumbnail_Requirements_Check( array(
-	'title' => 'WP Feed Post Thumbnail',
+if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+	require dirname( __FILE__ ) . '/vendor/autoload.php';
+}
+$requirements_check = new WP_Requirements_Check( array(
+	'title' => 'WP Widget Disable',
 	'php'   => '5.3',
-	'wp'    => '3.5.1',
+	'wp'    => '4.0',
 	'file'  => __FILE__,
-));
-
-if ( $wp_feed_post_thumbnail_requirements_check->passes() ) {
-	// Pull in the plugin classes and initialize
-	include( dirname( __FILE__ ) . '/classes/plugin.php' );
+) );
+if ( $requirements_check->passes() ) {
+	// Pull in the plugin classes and initialize.
+	include dirname( __FILE__ ) . '/classes/plugin.php';
 
 	$wp_feed_post_thumbnail_plugin = new WP_Feed_Post_Thumbnail_Plugin();
 	add_action( 'plugins_loaded', array( $wp_feed_post_thumbnail_plugin, 'add_hooks' ) );
