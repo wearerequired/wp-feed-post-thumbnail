@@ -43,4 +43,4 @@ if ( $requirements_check->passes() ) {
 	add_action( 'plugins_loaded', array( $wp_feed_post_thumbnail_plugin, 'add_hooks' ) );
 }
 
-unset( $wp_feed_post_thumbnail_requirements_check );
+unset( $requirements_check );
