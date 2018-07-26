@@ -67,7 +67,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 * @since 1.0.0
 	 */
 	public function add_feed_namespace() {
-		echo 'xmlns:media="http://search.yahoo.com/mrss/"';
+		echo 'xmlns:media="http://search.yahoo.com/mrss/" ';
 	}
 
 	/**
