@@ -3,13 +3,13 @@
  * Plugin Name: WP Feed Post Thumbnail
  * Plugin URI:  https://required.com/services/wordpress-plugins/wp-feed-post-thumbnail/
  * Description: Adds MRSS namespace to the feed and uses post-thumbnail as media element in the feed. Settings available under Settings -> Reading.
- * Version:     2.1.0
+ * Version:     2.1.1
  * Author:      required
  * Author URI:  https://required.com
  * License:     GPLv2+
  * Text Domain: wp-feed-post-thumbnail
  *
- * Copyright (c) 2015-2017 required+ (email: support@required.ch)
+ * Copyright (c) 2015-2017 required (email: support@required.ch)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
@@ -30,7 +30,7 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 	require dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 $requirements_check = new WP_Requirements_Check( array(
-	'title' => 'WP Widget Disable',
+	'title' => 'WP Feed Post Thumbnail',
 	'php'   => '5.3',
 	'wp'    => '4.0',
 	'file'  => __FILE__,
