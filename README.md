@@ -4,7 +4,7 @@
 * Requires at least: 4.0
 * Tested up to: 4.9
 * Requires PHP: 5.3
-* Stable tag: 2.1.0
+* Stable tag: 2.1.1
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,10 @@ Developed by [required](https://required.com/ "Team of experienced web professio
 
 ## Changelog ##
 
+### 2.1.1 ###
+
+* Fixed: Improved compatibility with Jetpack.
+
 ### 2.1.0 ###
 * Enhancement: Translations moved to https://translate.wordpress.org/projects/wp-plugins/wp-feed-post-thumbnail.
 * Enhancement: Simplified code base by removing `WP_Stack_Plugin2` dependency.
@@ -79,6 +83,10 @@ Developed by [required](https://required.com/ "Team of experienced web professio
 * Initial Release
 
 ## Upgrade Notice ##
+
+### 2.1.1 ###
+
+This release includes a small bug fix to improve compatibility with Jetpack.
 
 ### 2.0.1 ###
 Some minor improvements and bug fixes. 100% compatible with WordPress 4.4.
