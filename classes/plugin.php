@@ -20,18 +20,18 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 * Adds hooks.
 	 */
 	public function add_hooks() {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
+		add_action( 'init', [ $this, 'load_textdomain' ] );
 
 		// Modify RSS feed to support media element.
-		add_action( 'rss2_ns', array( $this, 'add_feed_namespace' ) );
-		add_action( 'rss2_item', array( $this, 'add_feed_item_media' ) );
+		add_action( 'rss2_ns', [ $this, 'add_feed_namespace' ] );
+		add_action( 'rss2_item', [ $this, 'add_feed_item_media' ] );
 
 		// Add an action link pointing to the options page.
 		$plugin_basename = plugin_basename( $this->get_path() . 'wp-feed-post-thumbnail.php' );
-		add_action( 'plugin_action_links_' . $plugin_basename, array( $this, 'plugin_action_links' ) );
+		add_action( 'plugin_action_links_' . $plugin_basename, [ $this, 'plugin_action_links' ] );
 
-		add_action( 'init', array( $this, 'register_settings' ) );
-		add_action( 'admin_init', array( $this, 'add_setting_fields' ) );
+		add_action( 'init', [ $this, 'register_settings' ] );
+		add_action( 'admin_init', [ $this, 'add_setting_fields' ] );
 	}
 
 	/**
@@ -51,13 +51,13 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 */
 	public function plugin_action_links( array $links ) {
 		return array_merge(
-			array(
+			[
 				'settings' => sprintf(
 					'<a href="%s">%s</a>',
 					admin_url( 'options-reading.php#wp-feed-post-thumbnail' ),
 					__( 'Settings', 'wp-feed-post-thumbnail' )
 				),
-			),
+			],
 			$links
 		);
 	}
@@ -201,13 +201,13 @@ class WP_Feed_Post_Thumbnail_Plugin {
 		register_setting(
 			'reading',
 			$this->plugin_slug . '_options',
-			array(
-				'sanitize_callback' => array( $this, 'validate_settings' ),
-				'default'           => array(
+			[
+				'sanitize_callback' => [ $this, 'validate_settings' ],
+				'default'           => [
 					'author'      => true,
 					'description' => true,
-				),
-			)
+				],
+			]
 		);
 	}
 
@@ -220,7 +220,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 		add_settings_field(
 			$this->plugin_slug,
 			__( 'Feed Post Thumbnail', 'wp-feed-post-thumbnail' ),
-			array( $this, 'render_settings' ),
+			[ $this, 'render_settings' ],
 			'reading'
 		);
 	}
@@ -233,10 +233,10 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	public function render_settings() {
 		$options = (array) get_option(
 			$this->plugin_slug . '_options',
-			array(
+			[
 				'author'      => 1,
 				'description' => 1,
-			)
+			]
 		);
 
 		$description = '';
