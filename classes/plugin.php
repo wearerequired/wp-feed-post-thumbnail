@@ -22,7 +22,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	public function add_hooks() {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 
-		// Modify RSS feed
+		// Modify RSS feed.
 		add_action( 'rss2_ns', array( $this, 'add_feed_namespace' ) );
 		add_action( 'rss2_item', array( $this, 'add_feed_item_media' ) );
 
@@ -82,10 +82,13 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			return;
 		}
 
-		$options = get_option( $this->plugin_slug . '_options', array(
-			'author'      => true,
-			'description' => true,
-		) );
+		$options = get_option(
+			$this->plugin_slug . '_options',
+			array(
+				'author'      => true,
+				'description' => true,
+			)
+		);
 
 		$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
 		$thumbnail = apply_filters( 'wp_feed_post_thumbnail_image', $thumbnail );
@@ -97,11 +100,19 @@ class WP_Feed_Post_Thumbnail_Plugin {
 		$img_attr       = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_full', 'full' ) );
 		$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_thumbnail', 'thumbnail' ) );
 		?>
-		<media:content url="<?php echo esc_url( $img_attr[0] ); ?>" type="<?php echo esc_attr( $thumbnail->post_mime_type ); ?>" medium="image" width="<?php echo absint( $img_attr[1] ); ?>" height="<?php echo absint( $img_attr[2] ); ?>">
+		<media:content
+			url="<?php echo esc_url( $img_attr[0] ); ?>"
+			type="<?php echo esc_attr( $thumbnail->post_mime_type ); ?>"
+			medium="image"
+			width="<?php echo absint( $img_attr[1] ); ?>"
+			height="<?php echo absint( $img_attr[2] ); ?>">
 			<media:title type="plain">
 				<![CDATA[<?php echo sanitize_text_field( apply_filters( 'wp_feed_post_thumbnail_title', $thumbnail->post_title ) ); ?>]]>
 			</media:title>
-			<media:thumbnail url="<?php echo esc_url( $img_attr_thumb[0] ); ?>" width="<?php echo absint( $img_attr_thumb[1] ); ?>" height="<?php echo absint( $img_attr_thumb[2] ); ?>" />
+			<media:thumbnail
+				url="<?php echo esc_url( $img_attr_thumb[0] ); ?>"
+				width="<?php echo absint( $img_attr_thumb[1] ); ?>"
+				height="<?php echo absint( $img_attr_thumb[2] ); ?>" />
 			<?php if ( isset( $options['description'] ) && $options['description'] ) : ?>
 				<media:description type="plain">
 					<![CDATA[<?php echo wp_kses_post( apply_filters( 'wp_feed_post_thumbnail_description', $thumbnail->post_content ) ); ?>]]>
@@ -142,10 +153,13 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 * @since 1.0.0
 	 */
 	public function render_settings() {
-		$options = (array) get_option( $this->plugin_slug . '_options', array(
-			'author'      => 1,
-			'description' => 1,
-		) );
+		$options = (array) get_option(
+			$this->plugin_slug . '_options',
+			array(
+				'author'      => 1,
+				'description' => 1,
+			)
+		);
 
 		$description = '';
 		$author      = '';
@@ -159,27 +173,27 @@ class WP_Feed_Post_Thumbnail_Plugin {
 		}
 
 		?>
-		<p>
+		<fieldset id="wp-feed-post-thumbnail">
+			<legend class="screen-reader-text"><span><?php _e( 'Feed Post Thumbnail', 'wp-feed-post-thumbnail' ); ?></span></legend>
 			<label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
 				<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[author]' ); ?>" value="1" <?php checked( 1, $author ); ?>>
 				<?php _e( 'Show author information in the feed media element', 'wp-feed-post-thumbnail' ); ?>
 			</label>
-		</p>
-		<p>
+			<br>
 			<label for="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>">
 				<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_description' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[description]' ); ?>" value="1" <?php checked( 1, $description ); ?>>
 				<?php _e( 'Show description in the feed media element', 'wp-feed-post-thumbnail' ); ?>
 			</label>
-		</p>
-		<p class="description">
-			<?php
-			printf(
-				/* translators: %s: 'media' */
-				__( 'Set attributes of the %s element in the feed.', 'wp-feed-post-thumbnail' ),
-				'<code>media</code>'
-			);
-			?>
-		</p>
+			<p class="description">
+				<?php
+				printf(
+					/* translators: %s: 'media' */
+					__( 'Set attributes of the %s element in the feed.', 'wp-feed-post-thumbnail' ),
+					'<code>media</code>'
+				);
+				?>
+			</p>
+		</fieldset>
 		<?php
 	}
 
