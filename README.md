@@ -1,8 +1,8 @@
-# WP Feed Post Thumbnail #
+# Feed Post Thumbnail #
 * Contributors: wearerequired, neverything, swissspidy
-* Tags: rss feed, rss, feed, thumbnail, mrss, media rss
+* Tags: rss feed, rss, feed, thumbnail, mrss
 * Requires at least: 4.0
-* Tested up to: 4.9
+* Tested up to: 5.1
 * Requires PHP: 5.3
 * Stable tag: 2.1.1
 * License: GPLv2 or later
@@ -26,7 +26,7 @@ WP Feed Post Thumbnail is very lightweight and only adds two small options under
 
 ## Frequently Asked Questions ##
 
-### Does the RSS feed still validate with this plugin enabled? ##
+### Does the RSS feed still validate with this plugin enabled? ###
 
 Yep, we add the proper XML namespaces for that. Everything just works as expected!
 
@@ -50,14 +50,13 @@ Yes. The plugin has two filters available for this:
 
 ## Contribute ##
 
-If you would like to contribute to this plugin, report an isse or anything like that, please note that we develop this plugin on [GitHub](https://github.com/wearerequired/required-wp-feed-post-thumbnail).
+If you would like to contribute to this plugin, report an issue or anything like that, please note that we develop this plugin on [GitHub](https://github.com/wearerequired/required-wp-feed-post-thumbnail).
 
 Developed by [required](https://required.com/ "Team of experienced web professionals from Switzerland & Germany")
 
 ## Changelog ##
 
 ### 2.1.1 ###
-
 * Fixed: Improved compatibility with Jetpack.
 
 ### 2.1.0 ###
@@ -85,7 +84,6 @@ Developed by [required](https://required.com/ "Team of experienced web professio
 ## Upgrade Notice ##
 
 ### 2.1.1 ###
-
 This release includes a small bug fix to improve compatibility with Jetpack.
 
 ### 2.0.1 ###
