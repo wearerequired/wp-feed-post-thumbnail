@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: WP Feed Post Thumbnail
+ * Plugin Name: Feed Post Thumbnail
  * Plugin URI:  https://required.com/services/wordpress-plugins/wp-feed-post-thumbnail/
  * Description: Adds MRSS namespace to the feed and uses post-thumbnail as media element in the feed. Settings available under Settings -> Reading.
- * Version:     2.1.1
+ * Version:     2.1.2
  * Author:      required
  * Author URI:  https://required.com
  * License:     GPLv2+
@@ -26,15 +26,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+// phpcs:disable Generic.Arrays.DisallowLongArraySyntax -- File needs to be parsable by PHP 5.2.4.
+
 if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 	require dirname( __FILE__ ) . '/vendor/autoload.php';
 }
-$requirements_check = new WP_Requirements_Check( array(
-	'title' => 'WP Feed Post Thumbnail',
-	'php'   => '5.3',
-	'wp'    => '4.0',
-	'file'  => __FILE__,
-) );
+
+// phpcs:ignore WordPress.NamingConventions -- Variable gets unset.
+$requirements_check = new WP_Requirements_Check(
+	array(
+		'title' => 'Feed Post Thumbnail',
+		'php'   => '5.4',
+		'wp'    => '4.7',
+		'file'  => __FILE__,
+	)
+);
+
 if ( $requirements_check->passes() ) {
 	// Pull in the plugin classes and initialize.
 	include dirname( __FILE__ ) . '/classes/plugin.php';
