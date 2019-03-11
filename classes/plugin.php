@@ -22,7 +22,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	public function add_hooks() {
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 
-		// Modify RSS feed.
+		// Modify RSS feed to support media element.
 		add_action( 'rss2_ns', array( $this, 'add_feed_namespace' ) );
 		add_action( 'rss2_item', array( $this, 'add_feed_item_media' ) );
 
@@ -30,7 +30,8 @@ class WP_Feed_Post_Thumbnail_Plugin {
 		$plugin_basename = plugin_basename( $this->get_path() . 'wp-feed-post-thumbnail.php' );
 		add_action( 'plugin_action_links_' . $plugin_basename, array( $this, 'plugin_action_links' ) );
 
-		add_action( 'admin_init', array( $this, 'add_settings' ) );
+		add_action( 'init', array( $this, 'register_settings' ) );
+		add_action( 'admin_init', array( $this, 'add_setting_fields' ) );
 	}
 
 	/**
@@ -53,7 +54,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			array(
 				'settings' => sprintf(
 					'<a href="%s">%s</a>',
-					admin_url( 'options-reading.php' ),
+					admin_url( 'options-reading.php#wp-feed-post-thumbnail' ),
 					__( 'Settings', 'wp-feed-post-thumbnail' )
 				),
 			),
@@ -78,67 +79,144 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	public function add_feed_item_media() {
 		global $post;
 
-		if ( ! has_post_thumbnail( $post->ID ) ) {
+		$images = [];
+		if ( has_post_thumbnail( $post->ID ) ) {
+			$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
+			/**
+			 * Filter thumbnail attachment.
+			 *
+			 * @since 1.0.0
+			 *
+			 * @param \WP_Post $thumbnail Featured images attachment post object.
+			 */
+			$images[] = apply_filters( 'wp_feed_post_thumbnail_image', $thumbnail );
+		}
+
+		/**
+		 * List of attachment media images.
+		 *
+		 * @since 2.1.2
+		 *
+		 * @param \WP_Post[] $images An array of attachment post objects
+		 */
+		$images = apply_filters( 'wp_feed_post_thumbnail_images', $images );
+
+		if ( empty( $images ) ) {
 			return;
 		}
 
-		$options = get_option(
+		$options = get_option( $this->plugin_slug . '_options' );
+
+		foreach ( $images as $image ) :
+			if ( ! $image instanceof WP_Post ) {
+				return;
+			}
+
+			/**
+			 * Image size for the primary image.
+			 *
+			 * @since 1.0.0
+			 * @since 2.1.2 The `$image` parameter was added.
+			 *
+			 * @param string $size Image size. Default: full.
+			 * @param \WP_Post $image Attachment post object.
+			 */
+			$img_attr = wp_get_attachment_image_src( $image->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_full', 'full', $image ) );
+
+			/**
+			 * Image size for the thumbnail.
+			 *
+			 * @since 1.0.0
+			 * @since 2.1.2 The `$image` parameter was added.
+			 *
+			 * @param string $size Thumbnail image size. Default: thumbnail.
+			 * @param \WP_Post $image Attachment post object.
+			 */
+			$img_attr_thumb = wp_get_attachment_image_src( $image->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_thumbnail', 'thumbnail', $image ) );
+
+			/**
+			 * Image title.
+			 *
+			 * @since 1.0.0
+			 * @since 2.1.2 The `$image` parameter was added.
+			 *
+			 * @param string $title Image title. Default is attachment title.
+			 * @param \WP_Post $image Attachment post object.
+			 */
+			$title = apply_filters( 'wp_feed_post_thumbnail_title', $image->post_title, $image );
+
+			/**
+			 * Image Description.
+			 *
+			 * @since 1.0.0
+			 * @since 2.1.2 The `$image` parameter was added.
+			 *
+			 * @param string $description Image description. Default is attachment description.
+			 * @param \WP_Post $image Attachment post object.
+			 */
+			$description = apply_filters( 'wp_feed_post_thumbnail_description', $image->post_content, $image );
+
+			/**
+			 * Image author.
+			 *
+			 * @since 1.0.0
+			 * @since 2.1.2 The `$image` parameter was added.
+			 *
+			 * @param string $author Image author. Default is attachment author.
+			 * @param \WP_Post $image Attachment post object.
+			 */
+			$author = apply_filters( 'wp_feed_post_thumbnail_author', get_the_author_meta( 'display_name', $image->post_author ), $image );
+
+			?>
+			<media:content
+				url="<?php echo esc_url( $img_attr[0] ); ?>"
+				type="<?php echo esc_attr( $image->post_mime_type ); ?>"
+				medium="image"
+				width="<?php echo absint( $img_attr[1] ); ?>"
+				height="<?php echo absint( $img_attr[2] ); ?>">
+				<media:title type="plain">
+					<![CDATA[<?php echo sanitize_text_field( $title ); ?>]]>
+				</media:title>
+				<media:thumbnail
+					url="<?php echo esc_url( $img_attr_thumb[0] ); ?>"
+					width="<?php echo absint( $img_attr_thumb[1] ); ?>"
+					height="<?php echo absint( $img_attr_thumb[2] ); ?>" />
+				<?php if ( isset( $options['description'] ) && $options['description'] && ! empty( $description ) ) : ?>
+					<media:description type="plain"><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></media:description>
+				<?php endif; ?>
+				<?php if ( isset( $options['author'] ) && $options['author'] && ! empty( $author ) ) : ?>
+					<media:copyright><?php echo esc_html( $author ); ?></media:copyright>
+				<?php endif; ?>
+			</media:content>
+			<?php
+		endforeach;
+	}
+
+	/**
+	 * Register new setting under Settings -> Reading.
+	 *
+	 * @since 2.1.2
+	 */
+	public function register_settings() {
+		register_setting(
+			'reading',
 			$this->plugin_slug . '_options',
 			array(
-				'author'      => true,
-				'description' => true,
+				'sanitize_callback' => array( $this, 'validate_settings' ),
+				'default'           => array(
+					'author'      => true,
+					'description' => true,
+				),
 			)
 		);
-
-		$thumbnail = get_post( get_post_thumbnail_id( $post->ID ) );
-		$thumbnail = apply_filters( 'wp_feed_post_thumbnail_image', $thumbnail );
-
-		if ( ! $thumbnail instanceof WP_Post ) {
-			return;
-		}
-
-		$img_attr       = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_full', 'full' ) );
-		$img_attr_thumb = wp_get_attachment_image_src( $thumbnail->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_thumbnail', 'thumbnail' ) );
-		?>
-		<media:content
-			url="<?php echo esc_url( $img_attr[0] ); ?>"
-			type="<?php echo esc_attr( $thumbnail->post_mime_type ); ?>"
-			medium="image"
-			width="<?php echo absint( $img_attr[1] ); ?>"
-			height="<?php echo absint( $img_attr[2] ); ?>">
-			<media:title type="plain">
-				<![CDATA[<?php echo sanitize_text_field( apply_filters( 'wp_feed_post_thumbnail_title', $thumbnail->post_title ) ); ?>]]>
-			</media:title>
-			<media:thumbnail
-				url="<?php echo esc_url( $img_attr_thumb[0] ); ?>"
-				width="<?php echo absint( $img_attr_thumb[1] ); ?>"
-				height="<?php echo absint( $img_attr_thumb[2] ); ?>" />
-			<?php if ( isset( $options['description'] ) && $options['description'] ) : ?>
-				<media:description type="plain">
-					<![CDATA[<?php echo wp_kses_post( apply_filters( 'wp_feed_post_thumbnail_description', $thumbnail->post_content ) ); ?>]]>
-				</media:description>
-			<?php endif; ?>
-			<?php if ( isset( $options['author'] ) && $options['author'] ) : ?>
-				<media:copyright>
-					<?php echo esc_html( apply_filters( 'wp_feed_post_thumbnail_author', get_the_author() ) ); ?>
-				</media:copyright>
-			<?php endif; ?>
-		</media:content>
-		<?php
 	}
 
 	/**
 	 * Add new setting under Settings -> Reading.
 	 *
-	 * @since 1.0.0
+	 * @since 2.1.2
 	 */
-	public function add_settings() {
-		register_setting(
-			'reading',
-			$this->plugin_slug . '_options',
-			array( $this, 'validate_settings' )
-		);
-
+	public function add_setting_fields() {
 		add_settings_field(
 			$this->plugin_slug,
 			__( 'Feed Post Thumbnail', 'wp-feed-post-thumbnail' ),
