@@ -1,10 +1,10 @@
 # Feed Post Thumbnail #
-* Contributors: wearerequired, neverything, swissspidy
+* Contributors: wearerequired, neverything, swissspidy, grapplerulrich
 * Tags: rss feed, rss, feed, thumbnail, mrss
 * Requires at least: 4.7
 * Tested up to: 5.1
 * Requires PHP: 5.4
-* Stable tag: 2.1.1
+* Stable tag: 2.1.2
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,11 @@ If you would like to contribute to this plugin, report an issue or anything like
 Developed by [required](https://required.com/ "Team of experienced web professionals from Switzerland & Germany")
 
 ## Changelog ##
+
+### 2.1.2 ###
+* Enhancement: Minor code improvements.
+* Enhancement: New filter `wp_feed_post_thumbnail_images` to list multiple images
+* Changed: minimum PHP version 5.4 & minimum WP version 4.7
 
 ### 2.1.1 ###
 * Fixed: Improved compatibility with Jetpack.
