@@ -35,7 +35,7 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 // phpcs:ignore WordPress.NamingConventions -- Variable gets unset.
 $requirements_check = new WP_Requirements_Check(
 	array(
-		'title' => 'WP Feed Post Thumbnail',
+		'title' => 'Feed Post Thumbnail',
 		'php'   => '5.4',
 		'wp'    => '4.7',
 		'file'  => __FILE__,
