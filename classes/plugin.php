@@ -93,7 +93,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 		}
 
 		/**
-		 * List of attachment media images.
+		 * Filters list of attachment media images.
 		 *
 		 * @since 2.1.2
 		 *
@@ -113,7 +113,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			}
 
 			/**
-			 * Image size for the primary image.
+			 * Filters image size for the primary image.
 			 *
 			 * @since 1.0.0
 			 * @since 2.1.2 The `$image` parameter was added.
@@ -121,10 +121,11 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			 * @param string $size Image size. Default: full.
 			 * @param \WP_Post $image Attachment post object.
 			 */
-			$img_attr = wp_get_attachment_image_src( $image->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_full', 'full', $image ) );
+			$img_size = apply_filters( 'wp_feed_post_thumbnail_image_size_full', 'full', $image );
+			$img_attr = wp_get_attachment_image_src( $image->ID, $img_size );
 
 			/**
-			 * Image size for the thumbnail.
+			 * Filters image size for the thumbnail.
 			 *
 			 * @since 1.0.0
 			 * @since 2.1.2 The `$image` parameter was added.
@@ -132,10 +133,11 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			 * @param string $size Thumbnail image size. Default: thumbnail.
 			 * @param \WP_Post $image Attachment post object.
 			 */
-			$img_attr_thumb = wp_get_attachment_image_src( $image->ID, apply_filters( 'wp_feed_post_thumbnail_image_size_thumbnail', 'thumbnail', $image ) );
+			$thumbnail_size = apply_filters( 'wp_feed_post_thumbnail_image_size_thumbnail', 'thumbnail', $image );
+			$img_attr_thumb = wp_get_attachment_image_src( $image->ID, $thumbnail_size );
 
 			/**
-			 * Image title.
+			 * Filters image title.
 			 *
 			 * @since 1.0.0
 			 * @since 2.1.2 The `$image` parameter was added.
@@ -146,7 +148,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			$title = apply_filters( 'wp_feed_post_thumbnail_title', $image->post_title, $image );
 
 			/**
-			 * Image Description.
+			 * Filters image description.
 			 *
 			 * @since 1.0.0
 			 * @since 2.1.2 The `$image` parameter was added.
@@ -157,7 +159,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			$description = apply_filters( 'wp_feed_post_thumbnail_description', $image->post_content, $image );
 
 			/**
-			 * Image author.
+			 * Filters image author.
 			 *
 			 * @since 1.0.0
 			 * @since 2.1.2 The `$image` parameter was added.
@@ -231,22 +233,16 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 * @since 1.0.0
 	 */
 	public function render_settings() {
-		$options = (array) get_option(
-			$this->plugin_slug . '_options',
-			[
-				'author'      => 1,
-				'description' => 1,
-			]
-		);
+		$options = get_option( $this->plugin_slug . '_options' );
 
 		$description = '';
 		$author      = '';
 
-		if ( array_key_exists( 'description', $options ) ) {
+		if ( isset( $options['description'] ) ) {
 			$description = $options['description'];
 		}
 
-		if ( array_key_exists( 'author', $options ) ) {
+		if ( isset( $options['author'] ) ) {
 			$author = $options['author'];
 		}
 
