@@ -32,9 +32,10 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 $requirements_check = new WP_Requirements_Check( array(
 	'title' => 'WP Feed Post Thumbnail',
 	'php'   => '5.3',
-	'wp'    => '4.0',
+	'wp'    => '4.7',
 	'file'  => __FILE__,
 ) );
+
 if ( $requirements_check->passes() ) {
 	// Pull in the plugin classes and initialize.
 	include dirname( __FILE__ ) . '/classes/plugin.php';

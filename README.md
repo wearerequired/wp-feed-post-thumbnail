@@ -1,9 +1,9 @@
 # Feed Post Thumbnail #
 * Contributors: wearerequired, neverything, swissspidy
 * Tags: rss feed, rss, feed, thumbnail, mrss
-* Requires at least: 4.0
+* Requires at least: 4.7
 * Tested up to: 5.1
-* Requires PHP: 5.3
+* Requires PHP: 5.4
 * Stable tag: 2.1.1
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
