@@ -50,7 +50,7 @@ Yes, The plugin has two filters available for this:
 
 	// Filters the featured image attachment post object.
 	add_filter( 'wp_feed_post_thumbnail_image', function( $thumbnail ) {
-		return ''; // Return any empty string or another attachment post object.
+		return ''; // Return an empty string or another attachment post object.
 	}, 10, 1 );
 
 	// Filters the array of attachment post objects. Defaults to featured image post object if exists.
