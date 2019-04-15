@@ -1,8 +1,8 @@
 # Feed Post Thumbnail #
 * Contributors: wearerequired, neverything, swissspidy, grapplerulrich
-* Tags: rss feed, rss, feed, thumbnail, mrss
+* Tags: rss feed, featured image, feed, thumbnail, mrss
 * Requires at least: 4.7
-* Tested up to: 5.1
+* Tested up to: 5.2
 * Requires PHP: 5.4
 * Stable tag: 2.1.2
 * License: GPLv2 or later
@@ -38,10 +38,45 @@ Yes. The plugin has two filters available for this:
 	add_filter( 'wp_feed_post_thumbnail_image_size_full', function( $size ) {
 		return 'large'; // Return any registered image size.
 	}, 10, 1 );
-	
+
 	// Filters the size on the media:thumbnail tag. Defaults to 'thumbnail'.
 	add_filter( 'wp_feed_post_thumbnail_image_size_thumbnail', function( $size ) {
 		return 'medium'; // Return any registered image size.
+	}, 10, 1 );
+
+### Can I change which images are shown? ###
+
+Yes, The plugin has two filters available for this:
+
+	// Filters the featured image attachment post object.
+	add_filter( 'wp_feed_post_thumbnail_image', function( $thumbnail ) {
+		return ''; // Return an empty string or another attachment post object.
+	}, 10, 1 );
+
+	// Filters the array of attachment post objects. Defaults to featured image post object if exists.
+	add_filter( 'wp_feed_post_thumbnail_images', function( $images ) {
+		$attachment_id = '123';
+		$images[] =  get_post( $attachment_id ); // Additional attachment post object.
+		return images;
+	}, 10, 1 );
+
+### Can I change the title, description or author shown with the image? ###
+
+Yes, there is a filter for each of these things:
+
+	// Filters the title on the media:title tag. Defaults to attachment title.
+	add_filter( 'wp_feed_post_thumbnail_title', function( $title ) {
+		return 'Override title'; // Return any plain text.
+	}, 10, 1 );
+
+	// Filters the text on the media:description tag. Defaults to attachment description.
+	add_filter( 'wp_feed_post_thumbnail_description', function( $description ) {
+		return 'Same description for all images'; // Return any plain string.
+	}, 10, 1 );
+
+	// Filters the name of the author on the media:copyright tag. Defaults to attachment author.
+	add_filter( 'wp_feed_post_thumbnail_author', function( $author_name ) {
+		return 'Matt'; // Return any plain string.
 	}, 10, 1 );
 
 ## Screenshots ##
@@ -56,35 +91,13 @@ Developed by [required](https://required.com/ "Team of experienced web professio
 
 ## Changelog ##
 
-### 2.1.2 ###
+### 2.1.2 - 2019-03-11 ###
 * Enhancement: Minor code improvements.
 * Enhancement: New filter `wp_feed_post_thumbnail_images` to list multiple images
 * Changed: minimum PHP version 5.4 & minimum WP version 4.7
 
-### 2.1.1 ###
+### 2.1.1 - 2018-08-06 ###
 * Fixed: Improved compatibility with Jetpack.
-
-### 2.1.0 ###
-* Enhancement: Translations moved to https://translate.wordpress.org/projects/wp-plugins/wp-feed-post-thumbnail.
-* Enhancement: Simplified code base by removing `WP_Stack_Plugin2` dependency.
-
-### 2.0.1 ###
-* Enhancement: Better escaping of feed data.
-* Enhancement: Improved translatable strings.
-* Fixed: Corrected settings link in the plugin list table.
-
-### 2.0.0 ###
-* Enhancement: Major rewrite using the `grunt-wp-plugin` template. Breaks backwards compatibility due to renamed options.
-* Fixed: Prevent notices in the RSS feed output.
-
-### 1.1.1 ###
-* Added missing method `WP_Feed_Post_Thumbnail->get_plugin_slug()`;
-
-### 1.1.0 ###
-* Code cleanup
-
-### 1.0.0 ###
-* Initial Release
 
 ## Upgrade Notice ##
 
