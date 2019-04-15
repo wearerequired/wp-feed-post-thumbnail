@@ -1,6 +1,6 @@
 # Feed Post Thumbnail #
 * Contributors: wearerequired, neverything, swissspidy, grapplerulrich
-* Tags: rss feed, rss, feed, thumbnail, mrss
+* Tags: rss feed, featured image, feed, thumbnail, mrss
 * Requires at least: 4.7
 * Tested up to: 5.1
 * Requires PHP: 5.4
