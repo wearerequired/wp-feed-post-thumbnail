@@ -1,5 +1,11 @@
 <?php
+/**
+ * Holds the main plugin class.
+ */
 
+/**
+ * Class WP_Feed_Post_Thumbnail_Plugin
+ */
 class WP_Feed_Post_Thumbnail_Plugin {
 
 	/**
@@ -177,7 +183,7 @@ class WP_Feed_Post_Thumbnail_Plugin {
 				width="<?php echo absint( $img_attr[1] ); ?>"
 				height="<?php echo absint( $img_attr[2] ); ?>">
 				<media:title type="plain">
-					<![CDATA[<?php echo sanitize_text_field( $title ); ?>]]>
+					<![CDATA[<?php echo sanitize_text_field( $title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>]]>
 				</media:title>
 				<media:thumbnail
 					url="<?php echo esc_url( $img_attr_thumb[0] ); ?>"
@@ -277,7 +283,6 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 * @since 1.0.0
 	 *
 	 * @param array $settings The changed plugin settings.
-	 *
 	 * @return array
 	 */
 	public function validate_settings( $settings ) {
