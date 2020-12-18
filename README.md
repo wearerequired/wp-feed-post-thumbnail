@@ -2,7 +2,7 @@
 * Contributors: wearerequired, neverything, swissspidy, grapplerulrich
 * Tags: rss feed, featured image, feed, thumbnail, mrss
 * Requires at least: 4.7
-* Tested up to: 5.5
+* Tested up to: 5.6
 * Requires PHP: 5.4
 * Stable tag: 2.1.2
 * License: GPLv2 or later
