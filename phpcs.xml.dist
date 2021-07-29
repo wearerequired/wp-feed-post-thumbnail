@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="WP Widget Disable">
-    <description>Coding Standard for WP Widget Disable plugin.</description>
+<ruleset name="Feed Post Thumbnail">
+    <description>Coding Standard for Feed Post Thumbnail plugin.</description>
 
     <file>.</file>
 
