@@ -1,8 +1,8 @@
 {
   "name": "wearerequired/wp-feed-post-thumbnail",
   "description": "Adds MRSS namespace to the feed and uses post-thumbnail as media element in the feed. Settings available under Settings -> Reading.",
-  "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
+  "type": "wordpress-plugin",
   "authors": [
     {
       "name": "required",
@@ -16,9 +16,14 @@
     "wearerequired/wp-requirements-check": "^1.0"
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
     "phpunit/phpunit": "^5 || ^7",
-    "wearerequired/coding-standards": "^1.6"
+    "wearerequired/coding-standards": "^5.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "scripts": {
     "format": "vendor/bin/phpcbf --report-summary --report-source .",

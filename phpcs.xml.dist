@@ -4,7 +4,9 @@
 
     <file>.</file>
 
-    <rule ref="Required"/>
+    <rule ref="Required">
+        <exclude name="SlevomatCodingStandard.TypeHints"/>
+    </rule>
 
     <!-- Verify that the text_domain is set to the desired text-domain.
      Multiple valid text domains can be provided as a comma-delimited list. -->
