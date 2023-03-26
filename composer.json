@@ -23,7 +23,8 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+    },
+    "platform-check": false
   },
   "scripts": {
     "format": "vendor/bin/phpcbf --report-summary --report-source .",
