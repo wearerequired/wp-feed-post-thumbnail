@@ -69,6 +69,13 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 * @since 1.0.0
 	 */
 	public function add_feed_namespace() {
+		$options = get_option( $this->plugin_slug . '_options' );
+
+		$disable_namespace = $options['disable_namespace'] ?? 0;
+		if ( $disable_namespace ) {
+			return;
+		}
+
 		echo 'xmlns:media="http://search.yahoo.com/mrss/" ';
 	}
 
@@ -107,6 +114,9 @@ class WP_Feed_Post_Thumbnail_Plugin {
 		}
 
 		$options = get_option( $this->plugin_slug . '_options' );
+
+		$show_description = $options['description'] ?? 1;
+		$show_author      = $options['author'] ?? 1;
 
 		foreach ( $images as $image ) :
 			if ( ! $image instanceof WP_Post ) {
@@ -184,10 +194,10 @@ class WP_Feed_Post_Thumbnail_Plugin {
 					url="<?php echo esc_url( $img_attr_thumb[0] ); ?>"
 					width="<?php echo absint( $img_attr_thumb[1] ); ?>"
 					height="<?php echo absint( $img_attr_thumb[2] ); ?>" />
-				<?php if ( isset( $options['description'] ) && $options['description'] && ! empty( $description ) ) : ?>
+				<?php if ( $show_description && ! empty( $description ) ) : ?>
 					<media:description type="plain"><![CDATA[<?php echo wp_kses_post( $description ); ?>]]></media:description>
 				<?php endif; ?>
-				<?php if ( isset( $options['author'] ) && $options['author'] && ! empty( $author ) ) : ?>
+				<?php if ( $show_author && ! empty( $author ) ) : ?>
 					<media:copyright><?php echo esc_html( $author ); ?></media:copyright>
 				<?php endif; ?>
 			</media:content>
@@ -207,8 +217,9 @@ class WP_Feed_Post_Thumbnail_Plugin {
 			[
 				'sanitize_callback' => [ $this, 'validate_settings' ],
 				'default'           => [
-					'author'      => true,
-					'description' => true,
+					'author'            => 1,
+					'description'       => 1,
+					'disable_namespace' => 0,
 				],
 			]
 		);
@@ -236,20 +247,22 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	public function render_settings() {
 		$options = get_option( $this->plugin_slug . '_options' );
 
-		$description = '';
-		$author      = '';
-
-		if ( isset( $options['description'] ) ) {
-			$description = $options['description'];
-		}
-
-		if ( isset( $options['author'] ) ) {
-			$author = $options['author'];
-		}
+		$description       = $options['description'] ?? 1;
+		$author            = $options['author'] ?? 1;
+		$disable_namespace = $options['disable_namespace'] ?? 0;
 
 		?>
 		<fieldset id="wp-feed-post-thumbnail">
 			<legend class="screen-reader-text"><span><?php _e( 'Feed Post Thumbnail', 'wp-feed-post-thumbnail' ); ?></span></legend>
+			<p class="description">
+				<?php
+				printf(
+					/* translators: %s: 'media' */
+					__( 'Set attributes of the %s element in the feed.', 'wp-feed-post-thumbnail' ),
+					'<code>media</code>'
+				);
+				?>
+			</p>
 			<label for="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>">
 				<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_author' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[author]' ); ?>" value="1" <?php checked( 1, $author ); ?>>
 				<?php _e( 'Show author information in the feed media element', 'wp-feed-post-thumbnail' ); ?>
@@ -260,14 +273,12 @@ class WP_Feed_Post_Thumbnail_Plugin {
 				<?php _e( 'Show description in the feed media element', 'wp-feed-post-thumbnail' ); ?>
 			</label>
 			<p class="description">
-				<?php
-				printf(
-					/* translators: %s: 'media' */
-					__( 'Set attributes of the %s element in the feed.', 'wp-feed-post-thumbnail' ),
-					'<code>media</code>'
-				);
-				?>
+				<?php _e( 'In case of a plugin conflict with duplicate Media RSS namespaces.', 'wp-feed-post-thumbnail' ); ?>
 			</p>
+			<label for="<?php echo esc_attr( $this->plugin_slug . '_disable_namespace' ); ?>">
+				<input type="checkbox" id="<?php echo esc_attr( $this->plugin_slug . '_disable_namespace' ); ?>" name="<?php echo esc_attr( $this->plugin_slug . '_options[disable_namespace]' ); ?>" value="1" <?php checked( 1, $disable_namespace ); ?>>
+				<?php _e( 'Disable Media RSS namespace', 'wp-feed-post-thumbnail' ); ?>
+			</label>
 		</fieldset>
 		<?php
 	}
@@ -281,9 +292,13 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	 * @return array
 	 */
 	public function validate_settings( $settings ) {
-		array_map( 'intval', $settings );
+		$new_settings = [];
 
-		return $settings;
+		$new_settings['author']            = empty( $settings['author'] ) ? 0 : 1;
+		$new_settings['description']       = empty( $settings['description'] ) ? 0 : 1;
+		$new_settings['disable_namespace'] = empty( $settings['disable_namespace'] ) ? 0 : 1;
+
+		return $new_settings;
 	}
 
 	/**
