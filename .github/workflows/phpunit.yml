@@ -29,18 +29,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['7.2', '7.3', '7.4']
-        wordpress: ['trunk']
+        php: ['8.0','7.4']
+        wordpress: ['latest']
         experimental: [false]
         include:
-          - php: '7.4'
-            wordpress: 'latest'
-            experimental: false
-          - php: '5.6'
-            wordpress: '4.7'
-            experimental: false
-          - php: '8.0'
-            wordpress: 'latest'
+          - php: '8.1'
+            wordpress: 'trunk'
             experimental: true
 
     steps:
