@@ -9,11 +9,6 @@
 class WP_Feed_Post_Thumbnail_Plugin {
 
 	/**
-	 * Plugin version.
-	 */
-	const VERSION = '2.1.2';
-
-	/**
 	 * Plugin slug.
 	 *
 	 * @since 1.0.0
