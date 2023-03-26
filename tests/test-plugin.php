@@ -5,18 +5,14 @@ class WP_Feed_Post_Thumbnail_Plugin_Test extends WP_Feed_Post_Thumbnail_TestCase
 	static $user;
 	static $posts;
 
-	public static function setUpBeforeClass() {
-		$factory = new WP_UnitTest_Factory();
-
+	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user  = $factory->user->create();
 		self::$posts = $factory->post->create_many( 25, array(
 			'post_author' => self::$user,
 		) );
-
-		self::commit_transaction();
 	}
 
-	public static function tearDownAfterClass() {
+	public static function wpTearDownAfterClass() {
 		if ( is_multisite() ) {
 			wpmu_delete_user( self::$user );
 		} else {
@@ -26,26 +22,26 @@ class WP_Feed_Post_Thumbnail_Plugin_Test extends WP_Feed_Post_Thumbnail_TestCase
 		foreach ( self::$posts as $post ) {
 			wp_delete_post( $post, true );
 		}
-
-		self::commit_transaction();
 	}
 
-	public function setUp() {
+	public function set_up() {
 		global $wp_rewrite;
 		$this->permalink_structure = get_option( 'permalink_structure' );
 		$wp_rewrite->set_permalink_structure( '' );
 		$wp_rewrite->flush_rules();
 
-		parent::setUp();
+		parent::set_up();
 
 		$this->post_count   = get_option( 'posts_per_rss' );
 		$this->excerpt_only = get_option( 'rss_use_excerpt' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		global $wp_rewrite;
 		$wp_rewrite->set_permalink_structure( $this->permalink_structure );
 		$wp_rewrite->flush_rules();
+
+		parent::tear_down();
 	}
 
 	public function test_namespace() {
