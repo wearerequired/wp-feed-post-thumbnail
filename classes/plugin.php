@@ -294,9 +294,9 @@ class WP_Feed_Post_Thumbnail_Plugin {
 	public function validate_settings( $settings ) {
 		$new_settings = [];
 
-		$new_settings['author']            = isset( $settings['author'] ) ? 1 : 0;
-		$new_settings['description']       = isset( $settings['description'] ) ? 1 : 0;
-		$new_settings['disable_namespace'] = isset( $settings['disable_namespace'] ) ? 1 : 0;
+		$new_settings['author']            = empty( $settings['author'] ) ? 0 : 1;
+		$new_settings['description']       = empty( $settings['description'] ) ? 0 : 1;
+		$new_settings['disable_namespace'] = empty( $settings['disable_namespace'] ) ? 0 : 1;
 
 		return $new_settings;
 	}

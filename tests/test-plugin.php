@@ -185,9 +185,26 @@ class WP_Feed_Post_Thumbnail_Plugin_Test extends WP_Feed_Post_Thumbnail_TestCase
 				// Full image
 				$media_content = xml_find( $items[ $key ]['child'], 'media:content' );
 
-				$this->assertEmpty( xml_find( $media_content[0]['child'], 'media:description' ) );
-				$this->assertEmpty( xml_find( $media_content[0]['child'], 'media:copyright' ) );
+				$this->assertEmpty( xml_find( $media_content[0]['child'], 'media:description' ), 'Description should be empty' );
+				$this->assertEmpty( xml_find( $media_content[0]['child'], 'media:copyright' ), 'Copyright should be empty' );
 			}
 		}
+	}
+
+	public function test_disabled_namespace_option() {
+		// Disable media namespace option.
+		update_option( 'wp-feed-post-thumbnail_options', array(
+			'disable_namespace' => true,
+		) );
+
+		$this->go_to( '/?feed=rss2' );
+		$feed = $this->do_rss2();
+		$xml  = xml_to_array( $feed );
+
+		// Get the rss element
+		$rss = xml_find( $xml, 'rss' );
+
+		// Check that the media namespace is not present.
+		$this->assertArrayNotHasKey( 'xmlns:media', $rss[0]['attributes'] );
 	}
 }
