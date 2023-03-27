@@ -91,21 +91,14 @@ Developed by [required](https://required.com/ "Team of experienced web professio
 
 ## Changelog ##
 
+### 3.0.0 -2023-03-27 ###
+* Enhancement: Add setting to disable adding Media RSS namespace.
+* Fixed: Prevent errors when unchecking all settings.
+* Changed: Requires at least PHP 7.4 and WordPress 6.0.
+
 ### 2.1.2 - 2019-03-11 ###
 * Enhancement: Minor code improvements.
 * Enhancement: New filter `wp_feed_post_thumbnail_images` to list multiple images
 * Changed: minimum PHP version 5.4 & minimum WP version 4.7
 
-### 2.1.1 - 2018-08-06 ###
-* Fixed: Improved compatibility with Jetpack.
-
-## Upgrade Notice ##
-
-### 2.1.1 ###
-This release includes a small bug fix to improve compatibility with Jetpack.
-
-### 2.0.1 ###
-Some minor improvements and bug fixes. 100% compatible with WordPress 4.4.
-
-### 2.0.0 ###
-Major rewrite to make the plugin more future-proof. Grab it while it’s hot!
+For previous updates see [Changelog.md](https://github.com/wearerequired/wp-feed-post-thumbnail/blob/master/CHANGELOG.md).
