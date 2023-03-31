@@ -32,7 +32,7 @@ Yep, we add the proper XML namespaces for that. Everything just works as expecte
 
 ### Any way to force the plugin to always add a certain thumbnail size? ###
 
-Yes. The plugin has two filters available for this:
+Yes, the plugin has two filters available for this:
 
 	// Filters the size on media:content tag. Defaults to 'full'.
 	add_filter( 'wp_feed_post_thumbnail_image_size_full', function( $size ) {
@@ -46,7 +46,7 @@ Yes. The plugin has two filters available for this:
 
 ### Can I change which images are shown? ###
 
-Yes, The plugin has two filters available for this:
+Yes, the plugin has two filters available for this:
 
 	// Filters the featured image attachment post object.
 	add_filter( 'wp_feed_post_thumbnail_image', function( $thumbnail ) {
