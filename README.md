@@ -1,9 +1,7 @@
 # Feed Post Thumbnail #
 Contributors: wearerequired, neverything, swissspidy, grapplerulrich  
 Tags: rss feed, featured image, feed, thumbnail, mrss  
-Requires at least: 6.0  
-Tested up to: 6.2  
-Requires PHP: 7.4  
+Tested up to: 6.7  
 Stable tag: 3.0.0  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
