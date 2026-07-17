@@ -1,7 +1,7 @@
 # Feed Post Thumbnail #
 Contributors: wearerequired, neverything, swissspidy, grapplerulrich  
 Tags: rss feed, featured image, feed, thumbnail, mrss  
-Tested up to: 6.7  
+Tested up to: 7.0  
 Stable tag: 3.0.0  
 License: GPLv2 or later  
 License URI: http://www.gnu.org/licenses/gpl-2.0.html  
